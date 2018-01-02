@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/careers">
+  <collaboration id="Collaboration">
+    <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="modalityChangeProcess"></participant>
+  </collaboration>
+  <process id="modalityChangeProcess" name="Cambio de Modalidad (Manual)" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+    <documentation>{"translationPrefix": "modalityChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
+    <laneSet id="laneSet_modalityChangeProcess">
+      <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <flowNodeRef>start</flowNodeRef>
+        <flowNodeRef>Notificacion</flowNodeRef>
+        <flowNodeRef>createCRMCase</flowNodeRef>
+        <flowNodeRef>sendNotificationToUser</flowNodeRef>
+        <flowNodeRef>sendNotificationToGroup</flowNodeRef>
+        <flowNodeRef>sid-49062155-98E7-4BEB-8C79-85C082EEE0D4</flowNodeRef>
+        <flowNodeRef>sid-9E1A7B95-B65E-4CBA-B8DD-09BE10DF4152</flowNodeRef>
+        <flowNodeRef>sid-5304A247-C6BA-410F-BB51-17D19FAF2494</flowNodeRef>
+        <flowNodeRef>sid-B3D7859E-9CD5-4974-B4AF-65D8C2A266A0</flowNodeRef>
+      </lane>
+      <lane id="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <flowNodeRef>end</flowNodeRef>
+        <flowNodeRef>validateRequest</flowNodeRef>
+        <flowNodeRef>requestOk</flowNodeRef>
+        <flowNodeRef>updateCRMCase</flowNodeRef>
+        <flowNodeRef>sendClosureNotification</flowNodeRef>
+        <flowNodeRef>obtainValues</flowNodeRef>
+        <flowNodeRef>updateModality</flowNodeRef>
+        <flowNodeRef>sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9</flowNodeRef>
+        <flowNodeRef>sid-FBF312EC-B472-4DD1-AA8E-692312C34B2F</flowNodeRef>
+        <flowNodeRef>sid-5E618739-1017-445E-B338-CDE6640AEF5D</flowNodeRef>
+        <flowNodeRef>sid-14D492F1-F4DB-4327-974F-03D1FE11230E</flowNodeRef>
+        <flowNodeRef>sid-4AE95487-B9B3-4F0C-9BA6-6B7F4C1B9858</flowNodeRef>
+        <flowNodeRef>validationNoOk</flowNodeRef>
+        <flowNodeRef>sid-D30BA029-472B-469F-AD82-8292863676F8</flowNodeRef>
+        <flowNodeRef>sid-41E89CED-2913-4939-B0B7-4F83E47BB3EF</flowNodeRef>
+        <flowNodeRef>sid-1D1E13A3-1E82-42FC-8B85-4347A3A6CD5E</flowNodeRef>
+        <flowNodeRef>validationOk</flowNodeRef>
+        <flowNodeRef>sid-B0056396-C1AB-4FE6-80F6-67BD1EF057F8</flowNodeRef>
+        <flowNodeRef>sid-A70E5B13-3026-48A5-9119-75C5F462CECF</flowNodeRef>
+        <flowNodeRef>sid-37CC6211-D111-4C8A-852E-512373DC9473</flowNodeRef>
+        <flowNodeRef>sid-85F80373-EDC6-4D54-A349-655A1F601450</flowNodeRef>
+        <flowNodeRef>callProgramChange</flowNodeRef>
+        <flowNodeRef>scripttask1</flowNodeRef>
+        <flowNodeRef>scripttask2</flowNodeRef>
+        <flowNodeRef>validateCohort</flowNodeRef>
+        <flowNodeRef>endingNotification</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="start" name="Inicio" activiti:formKey="startForm">
+      <documentation>{ "translationPrefix": "initForm", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "newModality": { "groupAs": "modalityCsu", "groupType": "modalities", "renderAs": "enum", "customFieldType": "universityModalities", "key": "modalityId", "display": "description" }, "newCsu": { "groupAs": "modalityCsu", "groupType": "sedesCsu", "parentField": "newModality", "renderAs": "sedes", "key": "siteId", "display": "description", "customFieldType": "sedesAndCsu" }, "newSchedule": { "renderAs": "enum", "customFieldType": "universitySchedules", "key": "id", "display": "name" }, "newProgram": { "groupAs": "modalityCsu", "groupType": "programs", "renderAs": "dropdown", "customFieldType": "universityPrograms", "parentField": "newModality", "key": "programId", "display": "shortDescription" }, "infoLabel": { "groupAs": "modalityCsu", "groupType": "infoLabel", "renderAs": "staticLabel", "afterProp": "newSchedule", "parentField": "newModality" }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone" }, "studentComments": { "renderAs": "textArea" } } }</documentation>
+      <extensionElements>
+        <activiti:formProperty id="actualDate" name="Fecha Actual" type="date" variable="actualDate" datePattern="MM-dd-yyyy hh:mm" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" required="true"></activiti:formProperty>
+        <activiti:formProperty id="student" name="Alumno" type="string" variable="student" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentEmail" name="Email del Estudiante" type="string" variable="studentEmail"></activiti:formProperty>
+        <activiti:formProperty id="program" name="Programa Actual" type="string" variable="program" required="true"></activiti:formProperty>
+        <activiti:formProperty id="modality" name="Nueva Modalidad" type="string" variable="modality" required="true"></activiti:formProperty>
+        <activiti:formProperty id="newModality" name="Modalidad Destino" type="enum" variable="newModality" required="true"></activiti:formProperty>
+        <activiti:formProperty id="newCsu" name="CSU" type="string" variable="newCsu" required="true"></activiti:formProperty>
+        <activiti:formProperty id="newSchedule" name="Nueva Jornada" type="string" variable="newSchedule"></activiti:formProperty>
+        <activiti:formProperty id="newProgram" name="Nuevo Programa" type="string" variable="newProgram" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentTelephone" name="Teléfono/Celular" type="string" variable="studentTelephone"></activiti:formProperty>
+        <activiti:formProperty id="studentComments" name="Observaciones" type="string" variable="studentComments"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="createCRMCase" name="Crear Caso CRM" calledElement="crmCreationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="modalityChange" target="caseType"></activiti:in>
+        <activiti:in source="studentIdType" target="studentIdType"></activiti:in>
+        <activiti:in source="studentId" target="studentId"></activiti:in>
+        <activiti:out source="caseId" target="crmCaseId"></activiti:out>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="modalityChange" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="modalityChange" target="notificationType"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <endEvent id="end" name="Fin">
+      <documentation>Fin del proceso</documentation>
+    </endEvent>
+    <userTask id="validateRequest" name="Validar Cambio de Programa" activiti:candidateGroups="Application/BackOffice">
+      <documentation>{ "translationPrefix": "validateRequest", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "newModality": { "groupAs": "modalityCsu", "groupType": "modalities", "renderAs": "enum", "customFieldType": "universityModalities", "key": "modalityId", "display": "description" }, "newCsu": { "groupAs": "modalityCsu", "groupType": "sedesCsu", "parentField": "newModality", "renderAs": "sedes", "key": "siteId", "display": "description", "customFieldType": "sedesAndCsu" }, "newSchedule": { "renderAs": "enum", "customFieldType": "universitySchedules", "key": "id", "display": "name" }, "newProgram": { "groupAs": "modalityCsu", "groupType": "programs", "renderAs": "dropdown", "customFieldType": "universityPrograms", "parentField": "newModality", "key": "programId", "display": "shortDescription" }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "studentComments": { "renderAs": "textArea", "writable": false }, "comments": { "renderAs": "textArea" }, "requestApproved": { "groupAs": "yesNoJustificationWithOptions", "groupType": "options", "renderAs": "boolean" }, "rejectionCause": { "groupAs": "yesNoJustificationWithOptions", "groupType": "cause", "parentField": "requestApproved", "renderAs": "enum" } } }</documentation>
+      <extensionElements>
+        <activiti:formProperty id="requestApproved" name="Aprobación de Solicitud" type="boolean" variable="requestApproved" required="true"></activiti:formProperty>
+        <activiti:formProperty id="rejectionCause" name="Causa de Rechazo" type="enum" variable="rejectionCause">
+          <activiti:value id="A" name="A"></activiti:value>
+          <activiti:value id="B" name="B"></activiti:value>
+          <activiti:value id="C" name="C"></activiti:value>
+        </activiti:formProperty>
+        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateRequest"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[50]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="requestOk" name="Nuevo Programa?"></exclusiveGateway>
+    <callActivity id="updateCRMCase" name="Actualizar Caso CRM" calledElement="crmUpdateProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="close" target="status"></activiti:in>
+        <activiti:in source="crmCaseId" target="caseId"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendClosureNotification" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="modalityChangeClosure" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <serviceTask id="obtainValues" name="Obtener Valores" activiti:class="com.ilumno.bps.pdp.task.BannerFetchModalityData"></serviceTask>
+    <serviceTask id="updateModality" name="Actualizar Modalidad en Banner" activiti:class="com.ilumno.bps.pdp.task.BannerUpdateModalityTask">
+      <documentation>Registro y Control debe validar la decisión tomada por la Consejeria Estudiantil (si aplica) y/o aplicar el cambio de programa de ser exitosa la validación.
+ 
+Registro y Control debe realizar las siguientes tareas en el Sistema Académico para gestionar la solicitud del estudiante.
+ 
+ 
+· Registro y Control ingresa a la pantalla SGASTDN de Banner. Selecciona el ID del estudiante al cual se va a tramitar la solicitud y verifica el programa activo actual y el periodo vigente. 
+ 
+· El Registro y Control ingresa a la forma SFAREGS y registra el periodo académico a partir del cual se registra el nuevo programa y se ubica en la pestaña Curriculums.
+  
+· El Registro y Control oprime el botón Reemplazar y ubica el cursor en el campo Programa
+ 
+· Oprime el botón de búsqueda y selecciona la opción “Reglas de Curriculo Base por programa”.
+ 
+· Selecciona el nuevo programa que solicita el estudiante trasladarse y oprime el botón OK. Guardar la gestión realizada.
+ 
+· Realizar el traslado financiero del estudiante. -&gt; Pendiente Banner.</documentation>
+    </serviceTask>
+    <serviceTask id="validateCohort" name="Validar Cohorte" activiti:class="com.ilumno.bps.pdp.task.BannerValidateCohortTask"></serviceTask>
+    <exclusiveGateway id="sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9" name="Con Cohorte?"></exclusiveGateway>
+    <sequenceFlow id="sid-FBF312EC-B472-4DD1-AA8E-692312C34B2F" sourceRef="validateRequest" targetRef="requestOk"></sequenceFlow>
+    <sequenceFlow id="sid-49062155-98E7-4BEB-8C79-85C082EEE0D4" sourceRef="start" targetRef="Notificacion"></sequenceFlow>
+    <sequenceFlow id="sid-9E1A7B95-B65E-4CBA-B8DD-09BE10DF4152" sourceRef="createCRMCase" targetRef="sendNotificationToUser"></sequenceFlow>
+    <sequenceFlow id="sid-5304A247-C6BA-410F-BB51-17D19FAF2494" sourceRef="sendNotificationToUser" targetRef="sendNotificationToGroup"></sequenceFlow>
+    <sequenceFlow id="sid-5E618739-1017-445E-B338-CDE6640AEF5D" sourceRef="updateCRMCase" targetRef="sendClosureNotification"></sequenceFlow>
+    <sequenceFlow id="sid-14D492F1-F4DB-4327-974F-03D1FE11230E" sourceRef="obtainValues" targetRef="validateRequest"></sequenceFlow>
+    <sequenceFlow id="sid-B3D7859E-9CD5-4974-B4AF-65D8C2A266A0" sourceRef="sendNotificationToGroup" targetRef="obtainValues"></sequenceFlow>
+    <sequenceFlow id="sid-4AE95487-B9B3-4F0C-9BA6-6B7F4C1B9858" sourceRef="sendClosureNotification" targetRef="endingNotification"></sequenceFlow>
+    <sequenceFlow id="validationNoOk" name="No" sourceRef="requestOk" targetRef="validateCohort">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!requestApproved}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-D30BA029-472B-469F-AD82-8292863676F8" sourceRef="validateCohort" targetRef="sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9"></sequenceFlow>
+    <sequenceFlow id="sid-41E89CED-2913-4939-B0B7-4F83E47BB3EF" name="Si" sourceRef="sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9" targetRef="updateModality">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${cohortValidation}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-1D1E13A3-1E82-42FC-8B85-4347A3A6CD5E" name="No" sourceRef="sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9" targetRef="callProgramChange">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!cohortValidation}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="validationOk" name="Si" sourceRef="requestOk" targetRef="callProgramChange">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${requestApproved}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-B0056396-C1AB-4FE6-80F6-67BD1EF057F8" sourceRef="callProgramChange" targetRef="scripttask1"></sequenceFlow>
+    <sequenceFlow id="sid-A70E5B13-3026-48A5-9119-75C5F462CECF" sourceRef="updateModality" targetRef="scripttask2"></sequenceFlow>
+    <sequenceFlow id="sid-37CC6211-D111-4C8A-852E-512373DC9473" sourceRef="scripttask2" targetRef="updateCRMCase"></sequenceFlow>
+    <sequenceFlow id="sid-85F80373-EDC6-4D54-A349-655A1F601450" sourceRef="scripttask1" targetRef="updateCRMCase"></sequenceFlow>
+    <callActivity id="callProgramChange" name="Cambio de Programa" calledElement="programChangeProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="${true}" target="embedded"></activiti:in>
+        <activiti:in sourceExpression="${true}" target="validation"></activiti:in>
+        <activiti:in sourceExpression="${true}" target="newArea"></activiti:in>
+        <activiti:in source="owner" target="owner"></activiti:in>
+        <activiti:in source="actualDate" target="actualDate"></activiti:in>
+        <activiti:in source="studentId" target="studentId"></activiti:in>
+        <activiti:in source="student" target="student"></activiti:in>
+        <activiti:in source="studentEmail" target="studentEmail"></activiti:in>
+        <activiti:in source="studentTelephone" target="studentTelephone"></activiti:in>
+        <activiti:in source="program" target="program"></activiti:in>
+        <activiti:in source="newProgram" target="newProgram"></activiti:in>
+        <activiti:in source="newSchedule" target="newSchedule"></activiti:in>
+        <activiti:in source="studentComments" target="studentComments"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <scriptTask id="scripttask1" name="Preparar actualización caso x validación incorrecta" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script>java.lang.System.out.println("HELLO");</script>
+    </scriptTask>
+    <scriptTask id="scripttask2" name="Preparar actualización caso x cambio Jornada" activiti:autoStoreVariables="false">
+      <script>java.lang.System.out.println("HELLO");</script>
+    </scriptTask>
+    <sequenceFlow id="flow1" sourceRef="endingNotification" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="Notificacion" targetRef="createCRMCase"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
+      <bpmndi:BPMNShape bpmnElement="sid-DF77EB5C-7308-429E-8401-838B15EC5344" id="BPMNShape_sid-DF77EB5C-7308-429E-8401-838B15EC5344">
+        <omgdc:Bounds height="846.0" width="1097.0" x="15.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0AD809AE-4631-459E-97F9-A73F84FD514E" id="BPMNShape_sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <omgdc:Bounds height="216.0" width="1067.0" x="45.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03" id="BPMNShape_sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <omgdc:Bounds height="629.0" width="1067.0" x="45.0" y="296.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="90.0" y="168.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createCRMCase" id="BPMNShape_createCRMCase">
+        <omgdc:Bounds height="80.0" width="122.0" x="360.0" y="146.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToUser" id="BPMNShape_sendNotificationToUser">
+        <omgdc:Bounds height="75.0" width="161.0" x="540.0" y="148.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToGroup" id="BPMNShape_sendNotificationToGroup">
+        <omgdc:Bounds height="76.0" width="159.0" x="750.0" y="149.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="1050.0" y="757.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="validateRequest" id="BPMNShape_validateRequest">
+        <omgdc:Bounds height="80.0" width="99.0" x="197.0" y="315.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="requestOk" id="BPMNShape_requestOk">
+        <omgdc:Bounds height="40.0" width="40.0" x="226.0" y="434.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="updateCRMCase" id="BPMNShape_updateCRMCase">
+        <omgdc:Bounds height="80.0" width="100.0" x="660.0" y="735.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendClosureNotification" id="BPMNShape_sendClosureNotification">
+        <omgdc:Bounds height="79.0" width="100.0" x="795.0" y="735.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="obtainValues" id="BPMNShape_obtainValues">
+        <omgdc:Bounds height="80.0" width="100.0" x="55.0" y="315.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="updateModality" id="BPMNShape_updateModality">
+        <omgdc:Bounds height="80.0" width="100.0" x="660.0" y="510.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="validateCohort" id="BPMNShape_validateCohort">
+        <omgdc:Bounds height="80.0" width="99.0" x="360.0" y="415.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9" id="BPMNShape_sid-B126CD29-44FC-461F-AA31-0E3FD222CFC9">
+        <omgdc:Bounds height="40.0" width="40.0" x="555.0" y="435.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="callProgramChange" id="BPMNShape_callProgramChange">
+        <omgdc:Bounds height="55.0" width="105.0" x="194.0" y="589.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask1" id="BPMNShape_scripttask1">
+        <omgdc:Bounds height="71.0" width="130.0" x="182.0" y="739.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
+        <omgdc:Bounds height="71.0" width="130.0" x="645.0" y="620.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endingNotification" id="BPMNShape_endingNotification">
+        <omgdc:Bounds height="55.0" width="71.0" x="940.0" y="747.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Notificacion" id="BPMNShape_Notificacion">
+        <omgdc:Bounds height="55.0" width="105.0" x="200.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-FBF312EC-B472-4DD1-AA8E-692312C34B2F" id="BPMNEdge_sid-FBF312EC-B472-4DD1-AA8E-692312C34B2F">
+        <omgdi:waypoint x="246.0" y="395.0"></omgdi:waypoint>
+        <omgdi:waypoint x="246.0" y="434.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-49062155-98E7-4BEB-8C79-85C082EEE0D4" id="BPMNEdge_sid-49062155-98E7-4BEB-8C79-85C082EEE0D4">
+        <omgdi:waypoint x="125.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="185.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-9E1A7B95-B65E-4CBA-B8DD-09BE10DF4152" id="BPMNEdge_sid-9E1A7B95-B65E-4CBA-B8DD-09BE10DF4152">
+        <omgdi:waypoint x="482.0" y="186.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="185.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-5304A247-C6BA-410F-BB51-17D19FAF2494" id="BPMNEdge_sid-5304A247-C6BA-410F-BB51-17D19FAF2494">
+        <omgdi:waypoint x="701.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-5E618739-1017-445E-B338-CDE6640AEF5D" id="BPMNEdge_sid-5E618739-1017-445E-B338-CDE6640AEF5D">
+        <omgdi:waypoint x="760.0" y="775.0"></omgdi:waypoint>
+        <omgdi:waypoint x="795.0" y="774.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-14D492F1-F4DB-4327-974F-03D1FE11230E" id="BPMNEdge_sid-14D492F1-F4DB-4327-974F-03D1FE11230E">
+        <omgdi:waypoint x="155.0" y="355.0"></omgdi:waypoint>
+        <omgdi:waypoint x="197.0" y="355.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B3D7859E-9CD5-4974-B4AF-65D8C2A266A0" id="BPMNEdge_sid-B3D7859E-9CD5-4974-B4AF-65D8C2A266A0">
+        <omgdi:waypoint x="829.0" y="225.0"></omgdi:waypoint>
+        <omgdi:waypoint x="649.0" y="253.0"></omgdi:waypoint>
+        <omgdi:waypoint x="105.0" y="253.0"></omgdi:waypoint>
+        <omgdi:waypoint x="105.0" y="315.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-4AE95487-B9B3-4F0C-9BA6-6B7F4C1B9858" id="BPMNEdge_sid-4AE95487-B9B3-4F0C-9BA6-6B7F4C1B9858">
+        <omgdi:waypoint x="895.0" y="774.0"></omgdi:waypoint>
+        <omgdi:waypoint x="940.0" y="774.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="validationNoOk" id="BPMNEdge_validationNoOk">
+        <omgdi:waypoint x="266.0" y="454.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="455.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="12.0" x="272.0" y="420.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-D30BA029-472B-469F-AD82-8292863676F8" id="BPMNEdge_sid-D30BA029-472B-469F-AD82-8292863676F8">
+        <omgdi:waypoint x="459.0" y="455.0"></omgdi:waypoint>
+        <omgdi:waypoint x="555.0" y="455.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-41E89CED-2913-4939-B0B7-4F83E47BB3EF" id="BPMNEdge_sid-41E89CED-2913-4939-B0B7-4F83E47BB3EF">
+        <omgdi:waypoint x="595.0" y="455.0"></omgdi:waypoint>
+        <omgdi:waypoint x="707.0" y="455.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="510.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="8.0" x="603.0" y="420.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1D1E13A3-1E82-42FC-8B85-4347A3A6CD5E" id="BPMNEdge_sid-1D1E13A3-1E82-42FC-8B85-4347A3A6CD5E">
+        <omgdi:waypoint x="575.0" y="475.0"></omgdi:waypoint>
+        <omgdi:waypoint x="575.0" y="616.0"></omgdi:waypoint>
+        <omgdi:waypoint x="299.0" y="616.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="12.0" x="578.0" y="474.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="validationOk" id="BPMNEdge_validationOk">
+        <omgdi:waypoint x="246.0" y="474.0"></omgdi:waypoint>
+        <omgdi:waypoint x="246.0" y="589.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="8.0" x="248.0" y="474.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B0056396-C1AB-4FE6-80F6-67BD1EF057F8" id="BPMNEdge_sid-B0056396-C1AB-4FE6-80F6-67BD1EF057F8">
+        <omgdi:waypoint x="246.0" y="644.0"></omgdi:waypoint>
+        <omgdi:waypoint x="247.0" y="739.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-A70E5B13-3026-48A5-9119-75C5F462CECF" id="BPMNEdge_sid-A70E5B13-3026-48A5-9119-75C5F462CECF">
+        <omgdi:waypoint x="710.0" y="590.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="620.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-37CC6211-D111-4C8A-852E-512373DC9473" id="BPMNEdge_sid-37CC6211-D111-4C8A-852E-512373DC9473">
+        <omgdi:waypoint x="710.0" y="691.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="735.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-85F80373-EDC6-4D54-A349-655A1F601450" id="BPMNEdge_sid-85F80373-EDC6-4D54-A349-655A1F601450">
+        <omgdi:waypoint x="312.0" y="774.0"></omgdi:waypoint>
+        <omgdi:waypoint x="660.0" y="775.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="1011.0" y="774.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1050.0" y="774.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="305.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="186.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

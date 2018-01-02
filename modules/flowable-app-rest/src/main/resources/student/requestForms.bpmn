@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/careers">
+  <collaboration id="Collaboration">
+    <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="requestFormsProcess"></participant>
+  </collaboration>
+  <process id="requestFormsProcess" name="Formulario de Solicitudes" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+    <documentation>{"translationPrefix": "requestFormsProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
+    <laneSet id="laneSet_requestFormsProcess">
+      <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <flowNodeRef>start</flowNodeRef>
+        <flowNodeRef>createCRMCase</flowNodeRef>
+        <flowNodeRef>sendNotificationToUser</flowNodeRef>
+        <flowNodeRef>sendNotificationToGroup</flowNodeRef>
+        <flowNodeRef>sid-36ABACF3-4D82-4757-B3C2-ED28832361D5</flowNodeRef>
+        <flowNodeRef>sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B</flowNodeRef>
+        <flowNodeRef>sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0</flowNodeRef>
+        <flowNodeRef>sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46</flowNodeRef>
+        <flowNodeRef>Notificacion</flowNodeRef>
+      </lane>
+      <lane id="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <flowNodeRef>manageRequest</flowNodeRef>
+        <flowNodeRef>updateCRMCase</flowNodeRef>
+        <flowNodeRef>sendClosureNotificationToUser</flowNodeRef>
+        <flowNodeRef>sid-87E27D93-7750-4AB3-AF61-7C58C0A77699</flowNodeRef>
+        <flowNodeRef>sid-F1FC224F-493B-4DC1-B47A-2DA63552969B</flowNodeRef>
+        <flowNodeRef>sid-3A5CDA34-E386-424E-B25F-EAC5B2A331D5</flowNodeRef>
+        <flowNodeRef>sid-AFC142FA-93AA-4FCC-B780-1D50989CC1C7</flowNodeRef>
+        <flowNodeRef>sid-C128DF12-7425-4E0D-BE5D-F440818E393E</flowNodeRef>
+        <flowNodeRef>scripttask2</flowNodeRef>
+        <flowNodeRef>validateAndFixRequest</flowNodeRef>
+        <flowNodeRef>endevent1</flowNodeRef>
+        <flowNodeRef>endingNotification</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="start" name="Inicio" activiti:formKey="startForm">
+      <documentation>{"translationPrefix":"initialForm","fields":{"currentDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentDocument":{"renderAs":"textBox","customFieldType":"studentDocument","writable":false},"studentCsuSede":{"renderAs":"dropdown","customFieldType":"studentCsuSede","writable":false,"key":"siteId","display":"description"},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"studentAddress":{"renderAs":"textBox","customFieldType":"studentAddress","writable":false},"requestType":{"renderAs":"dropdown","customFieldType":"universityRequestTypes","groupAs":"universityRequestTypes","groupType":"types","key":"id","display":"name"},"request":{"groupAs":"universityRequestTypes","groupType":"requests","parentField":"requestType","renderAs":"dropdown","key":"id","display":"name"},"studentComments":{"renderAs":"textArea"},"supportDocumentation":{"renderAs":"fileAttachment"}}}</documentation>
+      <extensionElements>
+        <activiti:formProperty id="currentDate" name="Fecha Actual" type="date" variable="currentDate" datePattern="MM-dd-yyyy hh:mm" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="student" name="Alumno" type="string" variable="student" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentDocument" name="Documento del estudiante" type="string" variable="studentDocument" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentCsuSede" name="CSU del estudiante" type="string" variable="studentCsuSede" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentEmail" name="Email del Estudiante" type="string" variable="studentEmail"></activiti:formProperty>
+        <activiti:formProperty id="studentTelephone" name="Telefono/Celular" type="string" variable="studentTelephone" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentAddress" name="Direccion" type="string" variable="studentAddress" required="true"></activiti:formProperty>
+        <activiti:formProperty id="requestType" name="Tipo de Consulta" type="string" variable="requestType" required="true"></activiti:formProperty>
+        <activiti:formProperty id="request" name="Consulta" type="string" variable="request" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentComments" name="¿Cuál es su consulta?" type="string" variable="studentComments" required="true"></activiti:formProperty>
+        <activiti:formProperty id="supportDocumentation" name="Documentación Soporte" type="string" variable="supportDocumentation" required="true"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="createCRMCase" name="Crear Caso CRM" calledElement="crmCreationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="requestForm" target="caseType"></activiti:in>
+        <activiti:in source="studentIdType" target="studentIdType"></activiti:in>
+        <activiti:in source="studentId" target="studentId"></activiti:in>
+        <activiti:out source="caseId" target="crmCaseId"></activiti:out>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="Application/BackOffice">
+      <documentation>{"translationPrefix":"manageRequest","fields":{"currentDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentDocument":{"renderAs":"textBox","customFieldType":"studentDocument","writable":false},"studentCsuSede":{"renderAs":"dropdown","customFieldType":"studentCsuSede","writable":false,"key":"siteId","display":"description"},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"studentAddress":{"renderAs":"textBox","customFieldType":"studentAddress","writable":false},"requestType":{"renderAs":"dropdown","customFieldType":"universityRequestTypes","groupAs":"universityRequestTypes","groupType":"types","key":"id","display":"name"},"request":{"groupAs":"universityRequestTypes","groupType":"requests","parentField":"requestType","renderAs":"dropdown","key":"id","display":"name"},"studentComments":{"renderAs":"textArea"},"result":{"renderAs":"boolean","groupAs":"universityRequestResult","groupType":"result"},"targetArea":{"renderAs":"dropdown","groupAs":"universityRequestResult","groupType":"areas","parentField":"result","customFieldType":"universityRequestAreas","key":"id","display":"name"},"comments":{"renderAs":"textArea"}}}</documentation>
+      <extensionElements>
+        <activiti:formProperty id="result" name="Resolución Primer Contacto" type="boolean" variable="result" required="true"></activiti:formProperty>
+        <activiti:formProperty id="targetArea" name="Area destino" type="string" variable="targetArea"></activiti:formProperty>
+        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="manageComments" required="true"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[50]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <callActivity id="updateCRMCase" name="Actualizar Caso CRM" calledElement="crmUpdateProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="close" target="status"></activiti:in>
+        <activiti:in source="crmCaseId" target="caseId"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendClosureNotificationToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="requestFormClosure" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <exclusiveGateway id="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699" name="Resolución 1° Contacto?"></exclusiveGateway>
+    <userTask id="validateAndFixRequest" name="Validar y Solucionar Consulta" activiti:candidateGroups="Application/BackOffice">
+      <documentation>{"translationPrefix":"validateAndFixRequest","fields":{"currentDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentDocument":{"renderAs":"textBox","customFieldType":"studentDocument","writable":false},"studentCsuSede":{"renderAs":"dropdown","customFieldType":"studentCsuSede","writable":false,"key":"siteId","display":"description"},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"studentAddress":{"renderAs":"textBox","customFieldType":"studentAddress","writable":false},"requestType":{"renderAs":"dropdown","customFieldType":"universityRequestTypes","groupAs":"universityRequestTypes","groupType":"types","key":"id","display":"name"},"request":{"groupAs":"universityRequestTypes","groupType":"requests","parentField":"requestType","renderAs":"dropdown","key":"id","display":"name"},"studentComments":{"renderAs":"textArea"},"result":{"renderAs":"boolean","groupAs":"universityRequestResult","groupType":"result"},"targetArea":{"renderAs":"dropdown","groupAs":"universityRequestResult","groupType":"areas","parentField":"result","customFieldType":"universityRequestAreas","key":"id","display":"name"},"manageComments":{"renderAs":"textArea","writable":false},"comments":{"renderAs":"textArea"}}}</documentation>
+      <extensionElements>
+        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="validateComments" required="true"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[50]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <endEvent id="endevent1"></endEvent>
+    <sequenceFlow id="sid-36ABACF3-4D82-4757-B3C2-ED28832361D5" sourceRef="start" targetRef="Notificacion"></sequenceFlow>
+    <sequenceFlow id="sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B" sourceRef="createCRMCase" targetRef="sendNotificationToUser"></sequenceFlow>
+    <sequenceFlow id="sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0" sourceRef="sendNotificationToUser" targetRef="sendNotificationToGroup"></sequenceFlow>
+    <sequenceFlow id="sid-F1FC224F-493B-4DC1-B47A-2DA63552969B" sourceRef="updateCRMCase" targetRef="sendClosureNotificationToUser"></sequenceFlow>
+    <sequenceFlow id="sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46" sourceRef="sendNotificationToGroup" targetRef="manageRequest"></sequenceFlow>
+    <sequenceFlow id="sid-3A5CDA34-E386-424E-B25F-EAC5B2A331D5" sourceRef="manageRequest" targetRef="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699"></sequenceFlow>
+    <sequenceFlow id="sid-AFC142FA-93AA-4FCC-B780-1D50989CC1C7" name="No" sourceRef="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699" targetRef="validateAndFixRequest">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!result}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-C128DF12-7425-4E0D-BE5D-F440818E393E" sourceRef="sendClosureNotificationToUser" targetRef="endingNotification"></sequenceFlow>
+    <scriptTask id="scripttask2" name="Actualizacion exitosa" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script>java.lang.System.out.println("HELLO");</script>
+    </scriptTask>
+    <sequenceFlow id="flow1" name="Si" sourceRef="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699" targetRef="scripttask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="scripttask2" targetRef="updateCRMCase"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="validateAndFixRequest" targetRef="scripttask2"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="Notificacion" targetRef="createCRMCase"></sequenceFlow>
+    <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow5" sourceRef="endingNotification" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
+      <bpmndi:BPMNShape bpmnElement="sid-DF77EB5C-7308-429E-8401-838B15EC5344" id="BPMNShape_sid-DF77EB5C-7308-429E-8401-838B15EC5344">
+        <omgdc:Bounds height="574.0" width="999.0" x="0.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0AD809AE-4631-459E-97F9-A73F84FD514E" id="BPMNShape_sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <omgdc:Bounds height="213.0" width="969.0" x="30.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03" id="BPMNShape_sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <omgdc:Bounds height="361.0" width="969.0" x="30.0" y="228.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="82.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Notificacion" id="BPMNShape_Notificacion">
+        <omgdc:Bounds height="80.0" width="121.0" x="130.0" y="59.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createCRMCase" id="BPMNShape_createCRMCase">
+        <omgdc:Bounds height="79.0" width="128.0" x="300.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToUser" id="BPMNShape_sendNotificationToUser">
+        <omgdc:Bounds height="79.0" width="132.0" x="465.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToGroup" id="BPMNShape_sendNotificationToGroup">
+        <omgdc:Bounds height="81.0" width="157.0" x="645.0" y="59.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manageRequest" id="BPMNShape_manageRequest">
+        <omgdc:Bounds height="82.0" width="120.0" x="60.0" y="255.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="updateCRMCase" id="BPMNShape_updateCRMCase">
+        <omgdc:Bounds height="78.0" width="105.0" x="490.0" y="397.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendClosureNotificationToUser" id="BPMNShape_sendClosureNotificationToUser">
+        <omgdc:Bounds height="78.0" width="142.0" x="630.0" y="397.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699" id="BPMNShape_sid-87E27D93-7750-4AB3-AF61-7C58C0A77699">
+        <omgdc:Bounds height="40.0" width="40.0" x="225.0" y="276.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="validateAndFixRequest" id="BPMNShape_validateAndFixRequest">
+        <omgdc:Bounds height="80.0" width="100.0" x="195.0" y="396.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="950.0" y="418.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
+        <omgdc:Bounds height="67.0" width="105.0" x="350.0" y="402.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endingNotification" id="BPMNShape_endingNotification">
+        <omgdc:Bounds height="55.0" width="105.0" x="810.0" y="408.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-36ABACF3-4D82-4757-B3C2-ED28832361D5" id="BPMNEdge_sid-36ABACF3-4D82-4757-B3C2-ED28832361D5">
+        <omgdi:waypoint x="95.0" y="99.0"></omgdi:waypoint>
+        <omgdi:waypoint x="130.0" y="99.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B" id="BPMNEdge_sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B">
+        <omgdi:waypoint x="428.0" y="99.0"></omgdi:waypoint>
+        <omgdi:waypoint x="465.0" y="99.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0" id="BPMNEdge_sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0">
+        <omgdi:waypoint x="597.0" y="99.0"></omgdi:waypoint>
+        <omgdi:waypoint x="645.0" y="99.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-F1FC224F-493B-4DC1-B47A-2DA63552969B" id="BPMNEdge_sid-F1FC224F-493B-4DC1-B47A-2DA63552969B">
+        <omgdi:waypoint x="595.0" y="436.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="436.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46" id="BPMNEdge_sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46">
+        <omgdi:waypoint x="723.0" y="140.0"></omgdi:waypoint>
+        <omgdi:waypoint x="723.0" y="186.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="186.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="255.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-3A5CDA34-E386-424E-B25F-EAC5B2A331D5" id="BPMNEdge_sid-3A5CDA34-E386-424E-B25F-EAC5B2A331D5">
+        <omgdi:waypoint x="180.0" y="296.0"></omgdi:waypoint>
+        <omgdi:waypoint x="225.0" y="296.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-AFC142FA-93AA-4FCC-B780-1D50989CC1C7" id="BPMNEdge_sid-AFC142FA-93AA-4FCC-B780-1D50989CC1C7">
+        <omgdi:waypoint x="245.0" y="316.0"></omgdi:waypoint>
+        <omgdi:waypoint x="245.0" y="396.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="12.0" x="245.0" y="316.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-C128DF12-7425-4E0D-BE5D-F440818E393E" id="BPMNEdge_sid-C128DF12-7425-4E0D-BE5D-F440818E393E">
+        <omgdi:waypoint x="772.0" y="436.0"></omgdi:waypoint>
+        <omgdi:waypoint x="810.0" y="435.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="265.0" y="296.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.0" y="295.0"></omgdi:waypoint>
+        <omgdi:waypoint x="402.0" y="402.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="8.0" x="274.0" y="235.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="455.0" y="435.0"></omgdi:waypoint>
+        <omgdi:waypoint x="490.0" y="436.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="295.0" y="436.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="435.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="251.0" y="99.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="99.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="915.0" y="435.0"></omgdi:waypoint>
+        <omgdi:waypoint x="950.0" y="435.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/careers">
+  <collaboration id="Collaboration">
+    <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="studentIdentificationProcess"></participant>
+  </collaboration>
+  <process id="studentIdentificationProcess" name="Documento Estudiantil" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+    <documentation>{"translationPrefix": "studentIdentificationProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
+    <laneSet id="laneSet_studentIdentificationProcess">
+      <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <flowNodeRef>start</flowNodeRef>
+        <flowNodeRef>createCRMCase</flowNodeRef>
+        <flowNodeRef>sendNotificationToUser</flowNodeRef>
+        <flowNodeRef>sendNotificationToGroup</flowNodeRef>
+        <flowNodeRef>sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B</flowNodeRef>
+        <flowNodeRef>sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0</flowNodeRef>
+        <flowNodeRef>sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46</flowNodeRef>
+        <flowNodeRef>sid-E694A9E7-424C-4F29-958B-49C122888AFD</flowNodeRef>
+        <flowNodeRef>Notificacion</flowNodeRef>
+      </lane>
+      <lane id="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <flowNodeRef>end</flowNodeRef>
+        <flowNodeRef>manageRequest</flowNodeRef>
+        <flowNodeRef>updateCRMCase</flowNodeRef>
+        <flowNodeRef>sendClosureNotificationToUser</flowNodeRef>
+        <flowNodeRef>processResult</flowNodeRef>
+        <flowNodeRef>sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626</flowNodeRef>
+        <flowNodeRef>sendNotificationToUser1</flowNodeRef>
+        <flowNodeRef>sid-2685F973-4250-400D-AA17-CF38D734E273</flowNodeRef>
+        <flowNodeRef>sid-4448399B-DF32-487B-A766-4C80A5A2607A</flowNodeRef>
+        <flowNodeRef>sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675</flowNodeRef>
+        <flowNodeRef>sid-4D37B6BE-1B81-4ABB-B613-13FBCC98AB2C</flowNodeRef>
+        <flowNodeRef>duplicateCarnet</flowNodeRef>
+        <flowNodeRef>sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11</flowNodeRef>
+        <flowNodeRef>sid-D7509276-09D7-4125-AB98-90FFE8AAAF50</flowNodeRef>
+        <flowNodeRef>sid-C25CC364-C8AD-4197-B8BC-53F96F27E52F</flowNodeRef>
+        <flowNodeRef>sid-4A35868E-4DA0-4D6D-ACA6-77BC47AC85E6</flowNodeRef>
+        <flowNodeRef>sid-BA542420-7B3A-434C-9A8A-F6108D7B27A1</flowNodeRef>
+        <flowNodeRef>sid-B3D2FDF5-3EF3-4932-8467-4596E494B0C5</flowNodeRef>
+        <flowNodeRef>sid-733C2836-117B-4550-97C7-ABBDDC2D1F4A</flowNodeRef>
+        <flowNodeRef>sid-B469F9FD-FAFA-4698-9D25-42AF78C86354</flowNodeRef>
+        <flowNodeRef>sid-A94046AD-9B76-4C94-B6A2-438E28323DE0</flowNodeRef>
+        <flowNodeRef>sid-F1B14D5D-768A-4804-B89C-365DCDD09916</flowNodeRef>
+        <flowNodeRef>sid-B7A6758E-196C-4FCC-B971-2133E74C3141</flowNodeRef>
+        <flowNodeRef>sid-46D629F3-1720-47D5-9122-66A847B905AD</flowNodeRef>
+        <flowNodeRef>sid-08D9808F-4C4B-41CF-BFA6-52C4EA7D1DE0</flowNodeRef>
+        <flowNodeRef>sid-1B5C3A95-3736-4804-8DE1-B5CABC7E447B</flowNodeRef>
+        <flowNodeRef>exclusivegateway1</flowNodeRef>
+        <flowNodeRef>lockCarnet</flowNodeRef>
+        <flowNodeRef>endingNotification</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="start" name="Inicio" activiti:formKey="startForm">
+      <documentation>{ "translationPrefix": "initialForm", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "renovationCause": { "customFieldType": "universityRenovationCause", "renderAs": "dropdown", "key": "id", "display": "name" }, "studentComments": { "renderAs": "textArea" }, "supportDocument": { "renderAs": "fileAttachment", "fieldOptions": { "filePattern": "application/pdf", "fileAccept": "application/pdf" } } } }</documentation>
+      <extensionElements>
+        <activiti:formProperty id="currentDate" name="Fecha Actual" type="date" variable="currentDate" datePattern="MM-dd-yyyy hh:mm" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="student" name="Alumno" type="string" variable="student" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentDocument" name="Documento del Alumno" type="string" variable="studentDocument" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="renovationCause" name="Causal de Renovación" type="string" variable="renovationCause" required="true"></activiti:formProperty>
+        <activiti:formProperty id="studentComments" name="Observaciones" type="string" variable="studentComments" required="true"></activiti:formProperty>
+        <activiti:formProperty id="supportDocument" name="Documento de Soporte (Sólo PDF - Atributo obligatorio excepto en la opción &quot;Deterioro&quot; en el atributo )" type="string" variable="supportDocument"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="createCRMCase" name="Crear Caso CRM" calledElement="crmCreationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="studentIdentificationProcess" target="caseType"></activiti:in>
+        <activiti:in source="studentIdType" target="studentIdType"></activiti:in>
+        <activiti:in source="studentId" target="studentId"></activiti:in>
+        <activiti:out source="caseId" target="crmCaseId"></activiti:out>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="sendNotificationToUserType" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="sendNotificationToGroupType" target="notificationType"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <endEvent id="end" name="Fin">
+      <documentation>Fin del proceso</documentation>
+    </endEvent>
+    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="Application/BackOffice">
+      <documentation>{ "translationPrefix": "manageRequest", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "renovationCause": { "customFieldType": "universityRenovationCause", "renderAs": "dropdown", "key": "id", "display": "name" }, "studentComments": { "renderAs": "textArea" }, "processResult": { "renderAs": "boolean", "groupAs": "carnetRenovation", "groupType": "result" }, "carnetLock": { "renderAs": "boolean", "groupAs": "carnetRenovation", "groupType": "carnetLock", "parentField": "processResult" }, "comments": { "renderAs": "textArea" } } }</documentation>
+      <extensionElements>
+        <activiti:formProperty id="processResult" name="Proceso Exitoso (si / no)" type="boolean" variable="processResult" required="true"></activiti:formProperty>
+        <activiti:formProperty id="carnetLock" name="Bloqueo de Carnet" type="boolean" variable="carnetLock" required="true"></activiti:formProperty>
+        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="comments" required="true"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <callActivity id="updateCRMCase" name="Actualizar Caso CRM" calledElement="crmUpdateProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="close" target="status"></activiti:in>
+        <activiti:in source="crmCaseId" target="caseId"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="sendClosureNotificationToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="studentIdentificationClosure" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <exclusiveGateway id="processResult" name="Proceso Exitoso?"></exclusiveGateway>
+    <serviceTask id="sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626" name="Generar Cargo Renovación" activiti:class="com.ilumno.bps.pdp.task.GenerateRenovationCharge"></serviceTask>
+    <callActivity id="sendNotificationToUser1" name="Enviar Notificación Boleto de Pago Usuario" calledElement="userNotificationProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="sendNotificationToUser1Type" target="notificationType"></activiti:in>
+        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <receiveTask id="sid-2685F973-4250-400D-AA17-CF38D734E273" name="Confirmar Pago Banner"></receiveTask>
+    <serviceTask id="sid-4448399B-DF32-487B-A766-4C80A5A2607A" name="Gestionar Notificación Exceso Tiempo" activiti:class="com.ilumno.bps.pdp.task.OverTimeNotification"></serviceTask>
+    <serviceTask id="sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675" name="Preparar actualización por Proceso No exitoso" activiti:class="com.ilumno.bps.pdp.task.UpdateFailedProcess"></serviceTask>
+    <boundaryEvent id="sid-4D37B6BE-1B81-4ABB-B613-13FBCC98AB2C" attachedToRef="sid-2685F973-4250-400D-AA17-CF38D734E273" cancelActivity="true">
+      <timerEventDefinition>
+        <timeDuration>PT30M</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <userTask id="duplicateCarnet" name="Generar Duplicado Carnet">
+      <documentation>{"translationPrefix":"duplicateCarnet"}</documentation>
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[66]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <serviceTask id="sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11" name="Preparar Actualización x Cambio Carnet" activiti:class="com.ilumno.bps.pdp.task.UpdateStudentIdentificationChange"></serviceTask>
+    <sequenceFlow id="sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B" sourceRef="createCRMCase" targetRef="sendNotificationToUser"></sequenceFlow>
+    <sequenceFlow id="sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0" sourceRef="sendNotificationToUser" targetRef="sendNotificationToGroup"></sequenceFlow>
+    <sequenceFlow id="sid-D7509276-09D7-4125-AB98-90FFE8AAAF50" sourceRef="sendClosureNotificationToUser" targetRef="endingNotification"></sequenceFlow>
+    <sequenceFlow id="sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46" sourceRef="sendNotificationToGroup" targetRef="manageRequest"></sequenceFlow>
+    <sequenceFlow id="sid-C25CC364-C8AD-4197-B8BC-53F96F27E52F" sourceRef="manageRequest" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="sid-4A35868E-4DA0-4D6D-ACA6-77BC47AC85E6" name="Si" sourceRef="processResult" targetRef="sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${processResult}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-BA542420-7B3A-434C-9A8A-F6108D7B27A1" sourceRef="sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626" targetRef="sendNotificationToUser1"></sequenceFlow>
+    <sequenceFlow id="sid-B3D2FDF5-3EF3-4932-8467-4596E494B0C5" sourceRef="sendNotificationToUser1" targetRef="sid-2685F973-4250-400D-AA17-CF38D734E273"></sequenceFlow>
+    <sequenceFlow id="sid-733C2836-117B-4550-97C7-ABBDDC2D1F4A" sourceRef="sid-4D37B6BE-1B81-4ABB-B613-13FBCC98AB2C" targetRef="sid-4448399B-DF32-487B-A766-4C80A5A2607A"></sequenceFlow>
+    <sequenceFlow id="sid-B469F9FD-FAFA-4698-9D25-42AF78C86354" sourceRef="updateCRMCase" targetRef="sendClosureNotificationToUser"></sequenceFlow>
+    <sequenceFlow id="sid-A94046AD-9B76-4C94-B6A2-438E28323DE0" name="No" sourceRef="processResult" targetRef="sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!processResult}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-F1B14D5D-768A-4804-B89C-365DCDD09916" sourceRef="sid-4448399B-DF32-487B-A766-4C80A5A2607A" targetRef="updateCRMCase"></sequenceFlow>
+    <sequenceFlow id="sid-B7A6758E-196C-4FCC-B971-2133E74C3141" sourceRef="sid-2685F973-4250-400D-AA17-CF38D734E273" targetRef="duplicateCarnet"></sequenceFlow>
+    <sequenceFlow id="sid-46D629F3-1720-47D5-9122-66A847B905AD" sourceRef="duplicateCarnet" targetRef="sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11"></sequenceFlow>
+    <sequenceFlow id="sid-08D9808F-4C4B-41CF-BFA6-52C4EA7D1DE0" sourceRef="sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675" targetRef="updateCRMCase"></sequenceFlow>
+    <sequenceFlow id="sid-1B5C3A95-3736-4804-8DE1-B5CABC7E447B" sourceRef="sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11" targetRef="updateCRMCase"></sequenceFlow>
+    <sequenceFlow id="sid-E694A9E7-424C-4F29-958B-49C122888AFD" sourceRef="start" targetRef="Notificacion"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow1" sourceRef="exclusivegateway1" targetRef="processResult">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${carnetLock}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="lockCarnet" name="Bloquear Carnet" activiti:candidateGroups="Application/BackOffice">
+      <documentation>{ "translationPrefix": "lockCarnet", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "renovationCause": { "customFieldType": "universityRenovationCause", "renderAs": "dropdown", "key": "id", "display": "name" }, "studentComments": { "renderAs": "textArea" }, "deliverDate": { "renderAs": "date", "customFieldType": "dateField", "required": true }, "lockCarnetOnDeliver": { "renderAs": "boolean", "required": true }, "lockCarnetComments": { "renderAs": "textArea" } } }</documentation>
+      <extensionElements>
+        <activiti:formProperty id="lockCarnetOnDeliver" name="Bloqueo de credencial en la entrega" type="boolean" variable="lockCarnetOnDeliver"></activiti:formProperty>
+        <activiti:formProperty id="lockCarnetComments" name="Observaciones" type="string" variable="lockCarnetComments"></activiti:formProperty>
+        <activiti:formProperty id="deliverDate" name="Fecha de entrega" type="string" variable="deliverDate"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[33]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="exclusivegateway1" targetRef="lockCarnet">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!carnetLock}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="lockCarnet" targetRef="processResult"></sequenceFlow>
+    <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
+      <extensionElements>
+        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
+        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
+        <activiti:in source="processId" target="processId"></activiti:in>
+        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow4" sourceRef="endingNotification" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="Notificacion" targetRef="createCRMCase"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
+      <bpmndi:BPMNShape bpmnElement="sid-DF77EB5C-7308-429E-8401-838B15EC5344" id="BPMNShape_sid-DF77EB5C-7308-429E-8401-838B15EC5344">
+        <omgdc:Bounds height="675.0" width="1400.0" x="1.0" y="17.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0AD809AE-4631-459E-97F9-A73F84FD514E" id="BPMNShape_sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
+        <omgdc:Bounds height="250.0" width="1370.0" x="31.0" y="17.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03" id="BPMNShape_sid-D10A8765-2E2F-4B3D-BC65-790CB3CFEE03">
+        <omgdc:Bounds height="424.0" width="1370.0" x="31.0" y="267.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="83.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createCRMCase" id="BPMNShape_createCRMCase">
+        <omgdc:Bounds height="79.0" width="128.0" x="325.0" y="61.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToUser" id="BPMNShape_sendNotificationToUser">
+        <omgdc:Bounds height="79.0" width="132.0" x="490.0" y="61.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToGroup" id="BPMNShape_sendNotificationToGroup">
+        <omgdc:Bounds height="81.0" width="157.0" x="670.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="1340.0" y="592.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manageRequest" id="BPMNShape_manageRequest">
+        <omgdc:Bounds height="82.0" width="120.0" x="47.0" y="284.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="updateCRMCase" id="BPMNShape_updateCRMCase">
+        <omgdc:Bounds height="80.0" width="148.0" x="840.0" y="570.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendClosureNotificationToUser" id="BPMNShape_sendClosureNotificationToUser">
+        <omgdc:Bounds height="78.0" width="142.0" x="1030.0" y="571.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="processResult" id="BPMNShape_processResult">
+        <omgdc:Bounds height="40.0" width="40.0" x="358.0" y="408.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626" id="BPMNShape_sid-6877EE1F-DDF9-4B77-8B8D-E6600B521626">
+        <omgdc:Bounds height="77.0" width="118.0" x="320.0" y="286.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sendNotificationToUser1" id="BPMNShape_sendNotificationToUser1">
+        <omgdc:Bounds height="78.0" width="133.0" x="500.0" y="286.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-2685F973-4250-400D-AA17-CF38D734E273" id="BPMNShape_sid-2685F973-4250-400D-AA17-CF38D734E273">
+        <omgdc:Bounds height="79.0" width="100.0" x="677.0" y="285.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4D37B6BE-1B81-4ABB-B613-13FBCC98AB2C" id="BPMNShape_sid-4D37B6BE-1B81-4ABB-B613-13FBCC98AB2C">
+        <omgdc:Bounds height="30.0" width="30.0" x="763.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4448399B-DF32-487B-A766-4C80A5A2607A" id="BPMNShape_sid-4448399B-DF32-487B-A766-4C80A5A2607A">
+        <omgdc:Bounds height="79.0" width="100.0" x="866.0" y="312.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675" id="BPMNShape_sid-6C287699-5A0E-4789-A06D-A2F8DEBC4675">
+        <omgdc:Bounds height="76.0" width="148.0" x="305.0" y="572.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="duplicateCarnet" id="BPMNShape_duplicateCarnet">
+        <omgdc:Bounds height="75.0" width="149.0" x="652.0" y="390.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11" id="BPMNShape_sid-B747D01D-1E64-4189-B9D3-BCF69F24CB11">
+        <omgdc:Bounds height="76.0" width="148.0" x="653.0" y="495.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="86.0" y="408.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="lockCarnet" id="BPMNShape_lockCarnet">
+        <omgdc:Bounds height="55.0" width="105.0" x="54.0" y="495.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endingNotification" id="BPMNShape_endingNotification">
+        <omgdc:Bounds height="55.0" width="105.0" x="1200.0" y="582.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Notificacion" id="BPMNShape_Notificacion">
+        <omgdc:Bounds height="55.0" width="105.0" x="170.0" y="73.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B" id="BPMNEdge_sid-D6F62A05-FB2E-46C5-825C-AC142A1D8A5B">
+        <omgdi:waypoint x="453.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="490.0" y="100.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0" id="BPMNEdge_sid-06B0A0DD-B200-4A8C-8F8F-F1BB82C789A0">
+        <omgdi:waypoint x="622.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="670.0" y="100.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-D7509276-09D7-4125-AB98-90FFE8AAAF50" id="BPMNEdge_sid-D7509276-09D7-4125-AB98-90FFE8AAAF50">
+        <omgdi:waypoint x="1172.0" y="610.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1200.0" y="609.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46" id="BPMNEdge_sid-EDDEB11E-0F44-4E6B-87A2-DF7448962D46">
+        <omgdi:waypoint x="748.0" y="141.0"></omgdi:waypoint>
+        <omgdi:waypoint x="748.0" y="222.0"></omgdi:waypoint>
+        <omgdi:waypoint x="107.0" y="222.0"></omgdi:waypoint>
+        <omgdi:waypoint x="107.0" y="284.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-C25CC364-C8AD-4197-B8BC-53F96F27E52F" id="BPMNEdge_sid-C25CC364-C8AD-4197-B8BC-53F96F27E52F">
+        <omgdi:waypoint x="107.0" y="366.0"></omgdi:waypoint>
+        <omgdi:waypoint x="106.0" y="408.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-4A35868E-4DA0-4D6D-ACA6-77BC47AC85E6" id="BPMNEdge_sid-4A35868E-4DA0-4D6D-ACA6-77BC47AC85E6">
+        <omgdi:waypoint x="378.0" y="408.0"></omgdi:waypoint>
+        <omgdi:waypoint x="379.0" y="363.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="8.0" x="378.0" y="408.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-BA542420-7B3A-434C-9A8A-F6108D7B27A1" id="BPMNEdge_sid-BA542420-7B3A-434C-9A8A-F6108D7B27A1">
+        <omgdi:waypoint x="438.0" y="324.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="325.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B3D2FDF5-3EF3-4932-8467-4596E494B0C5" id="BPMNEdge_sid-B3D2FDF5-3EF3-4932-8467-4596E494B0C5">
+        <omgdi:waypoint x="633.0" y="325.0"></omgdi:waypoint>
+        <omgdi:waypoint x="677.0" y="324.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-733C2836-117B-4550-97C7-ABBDDC2D1F4A" id="BPMNEdge_sid-733C2836-117B-4550-97C7-ABBDDC2D1F4A">
+        <omgdi:waypoint x="793.0" y="355.0"></omgdi:waypoint>
+        <omgdi:waypoint x="866.0" y="351.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B469F9FD-FAFA-4698-9D25-42AF78C86354" id="BPMNEdge_sid-B469F9FD-FAFA-4698-9D25-42AF78C86354">
+        <omgdi:waypoint x="988.0" y="610.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1014.0" y="610.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1030.0" y="610.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-A94046AD-9B76-4C94-B6A2-438E28323DE0" id="BPMNEdge_sid-A94046AD-9B76-4C94-B6A2-438E28323DE0">
+        <omgdi:waypoint x="378.0" y="448.0"></omgdi:waypoint>
+        <omgdi:waypoint x="379.0" y="572.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="42.0" width="12.0" x="378.0" y="448.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-F1B14D5D-768A-4804-B89C-365DCDD09916" id="BPMNEdge_sid-F1B14D5D-768A-4804-B89C-365DCDD09916">
+        <omgdi:waypoint x="916.0" y="391.0"></omgdi:waypoint>
+        <omgdi:waypoint x="914.0" y="570.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B7A6758E-196C-4FCC-B971-2133E74C3141" id="BPMNEdge_sid-B7A6758E-196C-4FCC-B971-2133E74C3141">
+        <omgdi:waypoint x="727.0" y="364.0"></omgdi:waypoint>
+        <omgdi:waypoint x="726.0" y="390.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-46D629F3-1720-47D5-9122-66A847B905AD" id="BPMNEdge_sid-46D629F3-1720-47D5-9122-66A847B905AD">
+        <omgdi:waypoint x="726.0" y="465.0"></omgdi:waypoint>
+        <omgdi:waypoint x="727.0" y="495.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-08D9808F-4C4B-41CF-BFA6-52C4EA7D1DE0" id="BPMNEdge_sid-08D9808F-4C4B-41CF-BFA6-52C4EA7D1DE0">
+        <omgdi:waypoint x="453.0" y="610.0"></omgdi:waypoint>
+        <omgdi:waypoint x="840.0" y="610.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1B5C3A95-3736-4804-8DE1-B5CABC7E447B" id="BPMNEdge_sid-1B5C3A95-3736-4804-8DE1-B5CABC7E447B">
+        <omgdi:waypoint x="801.0" y="533.0"></omgdi:waypoint>
+        <omgdi:waypoint x="914.0" y="570.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-E694A9E7-424C-4F29-958B-49C122888AFD" id="BPMNEdge_sid-E694A9E7-424C-4F29-958B-49C122888AFD">
+        <omgdi:waypoint x="85.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="170.0" y="100.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="126.0" y="428.0"></omgdi:waypoint>
+        <omgdi:waypoint x="358.0" y="428.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="106.0" y="448.0"></omgdi:waypoint>
+        <omgdi:waypoint x="106.0" y="495.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="159.0" y="522.0"></omgdi:waypoint>
+        <omgdi:waypoint x="270.0" y="522.0"></omgdi:waypoint>
+        <omgdi:waypoint x="378.0" y="448.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="1305.0" y="609.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1340.0" y="609.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="275.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="325.0" y="100.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

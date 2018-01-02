@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/common">
+  <process id="bannerCreationProcess" name="Crear Caso Banner" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <serviceTask id="bannerCreationTask" name="Crear Caso en Banner" activiti:class="com.ilumno.bps.pdp.task.BannerCreateCaseTask">
+      <extensionElements>
+        <activiti:field name="caseType">
+          <activiti:expression><![CDATA[${caseType}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="bannerCreationTask"></sequenceFlow>
+    <receiveTask id="bannerCaseCreatedTask" name="Validar Fin Gestión"></receiveTask>
+    <sequenceFlow id="flow2" sourceRef="bannerCreationTask" targetRef="bannerCaseCreatedTask"></sequenceFlow>
+    <serviceTask id="prepareFailureEmail" name="Gestionar Notificación exceso tiempo resolución" activiti:class="com.ilumno.bps.pdp.task.PrepareTimeoutEmailTask"></serviceTask>
+    <boundaryEvent id="bannerTaskTimeout" name="Timeout" attachedToRef="bannerCaseCreatedTask" cancelActivity="true">
+      <timerEventDefinition>
+        <timeDuration>${operationTimeout}</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="flow3" sourceRef="bannerTaskTimeout" targetRef="prepareFailureEmail"></sequenceFlow>
+    <serviceTask id="mailErrorNotification" name="Enviar Notificación de Escalamiento" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:expression><![CDATA[${mailRecipient}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:expression><![CDATA[${mailSubject}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:expression><![CDATA[${mailHtml}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression><![CDATA[${mailSender}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow4" sourceRef="prepareFailureEmail" targetRef="mailErrorNotification"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow5" sourceRef="bannerCaseCreatedTask" targetRef="endevent1"></sequenceFlow>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <sequenceFlow id="flow6" sourceRef="mailErrorNotification" targetRef="endevent2"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_bannerCreationProcess">
+    <bpmndi:BPMNPlane bpmnElement="bannerCreationProcess" id="BPMNPlane_bannerCreationProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bannerCreationTask" id="BPMNShape_bannerCreationTask">
+        <omgdc:Bounds height="55.0" width="105.0" x="160.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bannerCaseCreatedTask" id="BPMNShape_bannerCaseCreatedTask">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bannerTaskTimeout" id="BPMNShape_bannerTaskTimeout">
+        <omgdc:Bounds height="30.0" width="30.0" x="340.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="prepareFailureEmail" id="BPMNShape_prepareFailureEmail">
+        <omgdc:Bounds height="55.0" width="131.0" x="147.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="mailErrorNotification" id="BPMNShape_mailErrorNotification">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="460.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="460.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="95.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="160.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="265.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="355.0" y="190.0"></omgdi:waypoint>
+        <omgdi:waypoint x="355.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="213.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="212.0" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="278.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="415.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="460.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="415.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="460.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

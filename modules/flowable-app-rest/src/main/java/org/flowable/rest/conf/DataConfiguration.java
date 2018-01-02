@@ -34,7 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -43,9 +42,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @author Joram Barrez
  */
 @Configuration
-public class DemoDataConfiguration {
+public class DataConfiguration {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(DemoDataConfiguration.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(DataConfiguration.class);
 
     @Autowired
     protected IdentityService identityService;
@@ -56,32 +55,23 @@ public class DemoDataConfiguration {
     @Autowired
     protected TaskService taskService;
 
-    @Autowired
-    protected Environment environment;
-
     @PostConstruct
     public void init() {
 
-        if (Boolean.valueOf(environment.getProperty("create.demo.users", "true"))) {
-            LOGGER.info("Initializing demo groups");
-            initDemoGroups();
-            LOGGER.info("Initializing demo users");
-            initDemoUsers();
-        }
+        LOGGER.info("Initializing groups");
+        initGroups();
+        LOGGER.info("Initializing users");
+        initUsers();
 
-        if (Boolean.valueOf(environment.getProperty("create.demo.definitions", "true"))) {
-            LOGGER.info("Initializing demo process definitions");
-            initDemoProcessDefinitions();
-        }
+        LOGGER.info("Initializing WorkFlows definitions");
+        initWFDefinitions();
 
-        if (Boolean.valueOf(environment.getProperty("create.demo.models", "true"))) {
-            LOGGER.info("Initializing demo models");
-            initDemoModelData();
-        }
+//        LOGGER.info("Initializing models");
+//        initDemoModelData();
     }
 
-    protected void initDemoGroups() {
-        String[] assignmentGroups = new String[] { "management", "sales", "marketing", "engineering" };
+    protected void initGroups() {
+        String[] assignmentGroups = new String[] { "student", "backoffice"};
         for (String groupId : assignmentGroups) {
             createGroup(groupId, "assignment");
         }
@@ -101,12 +91,12 @@ public class DemoDataConfiguration {
         }
     }
 
-    protected void initDemoUsers() {
-        createUser("kermit", "Kermit", "The Frog", "kermit", "kermit@flowable.org", null, Arrays.asList("management", "sales", "marketing", "engineering", "user", "admin"),
-                Arrays.asList("birthDate", "10-10-1955", "jobTitle", "Muppet", "location", "Hollywood", "phone", "+123456789", "twitterName", "alfresco", "skype", "flowable_kermit_frog"));
-
-        createUser("gonzo", "Gonzo", "The Great", "gonzo", "gonzo@flowable.org", null, Arrays.asList("management", "sales", "marketing", "user"), null);
-        createUser("fozzie", "Fozzie", "Bear", "fozzie", "fozzie@flowable.org", null, Arrays.asList("marketing", "engineering", "user"), null);
+    protected void initUsers() {
+//        createUser("kermit", "Kermit", "The Frog", "kermit", "kermit@flowable.org", null, Arrays.asList("student", "backoffice", "user", "admin"),
+//                Arrays.asList("birthDate", "10-10-1955", "jobTitle", "Muppet", "location", "Hollywood", "phone", "+123456789", "twitterName", "alfresco", "skype", "flowable_kermit_frog"));
+//
+//        createUser("gonzo", "Gonzo", "The Great", "gonzo", "gonzo@flowable.org", null, Arrays.asList("student", "backoffice", "user", "admin"), null);
+        createUser("admin", "admin", "admin", "admin", "francisco.mantaras@santexgroup.com", null, Arrays.asList("student", "backoffice", "user", "admin"), null);
     }
 
     protected void createUser(String userId, String firstName, String lastName, String password, String email, String imageResource, List<String> groups, List<String> userInfo) {
@@ -147,16 +137,19 @@ public class DemoDataConfiguration {
 
     }
 
-    protected void initDemoProcessDefinitions() {
+    protected void initWFDefinitions() {
 
-        String deploymentName = "Demo processes";
+        String deploymentName = "WorkFlow processes";
         List<Deployment> deploymentList = repositoryService.createDeploymentQuery().deploymentName(deploymentName).list();
 
         if (deploymentList == null || deploymentList.isEmpty()) {
-            repositoryService.createDeployment().name(deploymentName).addClasspathResource("createTimersProcess.bpmn20.xml").addClasspathResource("oneTaskProcess.bpmn20.xml")
-                    .addClasspathResource("VacationRequest.bpmn20.xml").addClasspathResource("VacationRequest.png").addClasspathResource("FixSystemFailureProcess.bpmn20.xml")
-                    .addClasspathResource("FixSystemFailureProcess.png").addClasspathResource("Helpdesk.bpmn20.xml").addClasspathResource("Helpdesk.png").addClasspathResource("reviewSalesLead.bpmn20.xml")
-                    .deploy();
+            repositoryService.createDeployment().name(deploymentName)
+            .addClasspathResource("common/bannerCreationProcess.bpmn").addClasspathResource("common/crmCreationProcess.bpmn").addClasspathResource("common/crmGetProcess.bpmn")
+            .addClasspathResource("common/crmUpdateProcess.bpmn").addClasspathResource("common/notificationProcess.bpmn").addClasspathResource("common/userNotificationProcess.bpmn")
+            .addClasspathResource("student/csuChange.bpmn").addClasspathResource("student/devolutionPostponement.bpmn").addClasspathResource("student/modalityChange.bpmn")
+            .addClasspathResource("student/programChange.bpmn").addClasspathResource("student/reAdmission.bpmn").addClasspathResource("student/requestForms.bpmn")
+            .addClasspathResource("student/scheduleChange.bpmn").addClasspathResource("student/siteChange.bpmn").addClasspathResource("student/studentIdentification.bpmn")
+            .addClasspathResource("student/supplementaryExam.bpmn").deploy();
         }
     }
 
