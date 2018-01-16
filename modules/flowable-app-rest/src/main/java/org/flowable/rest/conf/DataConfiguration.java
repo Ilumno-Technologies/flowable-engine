@@ -144,12 +144,12 @@ public class DataConfiguration {
 
         if (deploymentList == null || deploymentList.isEmpty()) {
             repositoryService.createDeployment().name(deploymentName)
-            .addClasspathResource("common/bannerCreationProcess.bpmn").addClasspathResource("common/crmCreationProcess.bpmn").addClasspathResource("common/crmGetProcess.bpmn")
-            .addClasspathResource("common/crmUpdateProcess.bpmn").addClasspathResource("common/notificationProcess.bpmn").addClasspathResource("common/userNotificationProcess.bpmn")
-            .addClasspathResource("student/csuChange.bpmn").addClasspathResource("student/devolutionPostponement.bpmn").addClasspathResource("student/modalityChange.bpmn")
-            .addClasspathResource("student/programChange.bpmn").addClasspathResource("student/reAdmission.bpmn").addClasspathResource("student/requestForms.bpmn")
-            .addClasspathResource("student/scheduleChange.bpmn").addClasspathResource("student/siteChange.bpmn").addClasspathResource("student/studentIdentification.bpmn")
-            .addClasspathResource("student/supplementaryExam.bpmn").deploy();
+            .addClasspathResource("bannerCreationProcess.bpmn").addClasspathResource("crmCreationProcess.bpmn").addClasspathResource("crmGetProcess.bpmn")
+            .addClasspathResource("crmUpdateProcess.bpmn").addClasspathResource("notificationProcess.bpmn").addClasspathResource("userNotificationProcess.bpmn")
+            .addClasspathResource("csuChange.bpmn").addClasspathResource("devolutionPostponement.bpmn").addClasspathResource("modalityChange.bpmn")
+            .addClasspathResource("programChange.bpmn").addClasspathResource("reAdmission.bpmn").addClasspathResource("requestForms.bpmn")
+            .addClasspathResource("scheduleChange.bpmn").addClasspathResource("siteChange.bpmn").addClasspathResource("studentIdentification.bpmn")
+            .addClasspathResource("supplementaryExam.bpmn").deploy();
         }
     }
 

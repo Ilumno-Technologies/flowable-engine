@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="studentIdentificationProcess"></participant>
   </collaboration>
-  <process id="studentIdentificationProcess" name="Documento Estudiantil" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="studentIdentificationProcess" name="Documento Estudiantil" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "studentIdentificationProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_studentIdentificationProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -71,7 +71,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -94,13 +94,13 @@
     <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="sendNotificationToGroupType" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <endEvent id="end" name="Fin">
       <documentation>Fin del proceso</documentation>
     </endEvent>
-    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "manageRequest", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "renovationCause": { "customFieldType": "universityRenovationCause", "renderAs": "dropdown", "key": "id", "display": "name" }, "studentComments": { "renderAs": "textArea" }, "processResult": { "renderAs": "boolean", "groupAs": "carnetRenovation", "groupType": "result" }, "carnetLock": { "renderAs": "boolean", "groupAs": "carnetRenovation", "groupType": "carnetLock", "parentField": "processResult" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="processResult" name="Proceso Exitoso (si / no)" type="boolean" variable="processResult" required="true"></activiti:formProperty>
@@ -189,7 +189,7 @@
     <sequenceFlow id="flow1" sourceRef="exclusivegateway1" targetRef="processResult">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${carnetLock}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="lockCarnet" name="Bloquear Carnet" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="lockCarnet" name="Bloquear Carnet" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "lockCarnet", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "renovationCause": { "customFieldType": "universityRenovationCause", "renderAs": "dropdown", "key": "id", "display": "name" }, "studentComments": { "renderAs": "textArea" }, "deliverDate": { "renderAs": "date", "customFieldType": "dateField", "required": true }, "lockCarnetOnDeliver": { "renderAs": "boolean", "required": true }, "lockCarnetComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="lockCarnetOnDeliver" name="Bloqueo de credencial en la entrega" type="boolean" variable="lockCarnetOnDeliver"></activiti:formProperty>
@@ -215,7 +215,7 @@
     <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

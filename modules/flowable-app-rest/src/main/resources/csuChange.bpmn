@@ -49,7 +49,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -66,7 +66,7 @@
     <callActivity id="notifyGroups" name="Enviar Notificacion a Groups Responsables" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="csuChange" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="sid-2295E5D2-51B4-4841-B58B-76EF76208470" sourceRef="startForm" targetRef="Notificacion"></sequenceFlow>
@@ -78,7 +78,7 @@
         <activiti:formProperty id="requestApproved" name="Aprobación de Solicitud" type="boolean" variable="requestApproved"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[50]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -125,7 +125,7 @@
     <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

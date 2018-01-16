@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="programChangeProcess"></participant>
   </collaboration>
-  <process id="programChangeProcess" name="Cambio de Programa (Manual)" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="programChangeProcess" name="Cambio de Programa (Manual)" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "programChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_programChangeProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -128,7 +128,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -151,10 +151,10 @@
     <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="programChange" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="confirmStandardization" name="Confirmar Homologación" activiti:candidateGroups="Application/Student">
+    <userTask id="confirmStandardization" name="Confirmar Homologación" activiti:candidateGroups="APPLICATION/Student">
       <documentation>{ "translationPrefix": "confirmStandardization", "fields": { "standardizationOk": { "groupAs": "standardization", "groupType": "condition", "renderAs": "boolean" }, "supportDocuments": { "groupAs": "standardization", "groupType": "file", "parentField": "standardizationOk", "renderAs": "fileAttachment" }, "commentsStandardization": { "renderAs": "textArea" }, "acceptedStandardization": { "renderAs": "yesOrNo", "customFieldType": "yesOrNo", "key": "value" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="acceptedStandardization" name="Homologación aceptada" type="boolean" variable="acceptedStandardization" required="true"></activiti:formProperty>
@@ -207,7 +207,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
 ·Selecciona el nuevo programa que solicita el estudiante trasladarse y oprime el botón OK. Guardar la gestión realizada.</documentation>
     </serviceTask>
     <exclusiveGateway id="sid-790CC8CD-54F9-4E4B-A291-240D548433BE" name="Misma área estudio?"></exclusiveGateway>
-    <userTask id="manualFollowup" name="Seguimiento Personalizado Cambio" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manualFollowup" name="Seguimiento Personalizado Cambio" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{"translationPrefix":"manualFollowup","fields":{"manualFollowupApproved":{"renderAs":"yesOrNo"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="manualFollowupApproved" name="Seguimiento manual aprobado" type="boolean" variable="manualFollowupApproved" required="true"></activiti:formProperty>
@@ -234,13 +234,13 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <endEvent id="sid-49BE8CA5-9546-4E95-B83F-9EC8741A4A7A"></endEvent>
     <endEvent id="endEvent"></endEvent>
     <exclusiveGateway id="sid-6A98FB76-43B8-4C2C-831B-A5F495280487" name="Escala a consejería estudiantil?"></exclusiveGateway>
-    <userTask id="scheduleAppointment" name="Agendar Cita Reingreso" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="scheduleAppointment" name="Agendar Cita Reingreso" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{"translationPrefix":"scheduleAppointment","fields":{"actualDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"program":{"renderAs":"dropdown","customFieldType":"studentProgram","writable":false},"newProgram":{"customFieldType":"universityPrograms","groupAs":"programSchedulesModalities","groupType":"programs","key":"id","display":"name","renderAs":"dropdown"},"newSchedule":{"groupAs":"programSchedulesModalities","groupType":"schedules","parentField":"newProgram","renderAs":"enum","key":"id","display":"name"},"comments":{"renderAs":"textArea"},"appointmentDate":{"renderAs":"date","dateObject":false,"fieldOptions":{"format":"short"}}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="appointmentDate" name="Fecha de la cita" type="string" variable="appointmentDate"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[15]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -260,10 +260,10 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <callActivity id="sendNotificationToGroup2" name="Enviar Notificación Cita Director" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="programChange" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="appointmentChecklist" name="Confirmar Asistencia" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="appointmentChecklist" name="Confirmar Asistencia" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{"translationPrefix":"appointmentChecklist","fields":{"studentAttended":{"renderAs":"yesOrNo"},"actualDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"program":{"renderAs":"dropdown","customFieldType":"studentProgram","writable":false},"newProgram":{"customFieldType":"universityPrograms","groupAs":"programSchedulesModalities","groupType":"programs","key":"id","display":"name","renderAs":"dropdown"},"newSchedule":{"groupAs":"programSchedulesModalities","groupType":"schedules","parentField":"newProgram","renderAs":"enum","key":"id","display":"name"},"comments":{"renderAs":"textArea"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="studentAttended" name="Alumno atendió a la reunión" type="boolean" variable="studentAttended" required="true"></activiti:formProperty>
@@ -281,7 +281,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-58AF9ED2-28B9-4F80-A844-92434BE94063" name="Cita Realizada?"></exclusiveGateway>
-    <userTask id="validateStandardization" name="Validar Homologación y Cohorte" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="validateStandardization" name="Validar Homologación y Cohorte" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "validateStandardization", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "newProgram": { "customFieldType": "universityPrograms", "groupAs": "programSchedulesModalities", "groupType": "programs", "key": "id", "display": "name", "renderAs": "dropdown" }, "newSchedule": { "groupAs": "programSchedulesModalities", "groupType": "schedules", "parentField": "newProgram", "renderAs": "enum", "key": "id", "display": "name" }, "standardizationOk": { "groupAs": "standardization", "groupType": "condition", "renderAs": "boolean" }, "supportDocuments": { "groupAs": "standardization", "groupType": "file", "parentField": "standardizationOk", "renderAs": "fileAttachment" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="standardizationOk" name="Homologación correcta" type="boolean" variable="standardizationOk"></activiti:formProperty>
@@ -308,7 +308,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
       </extensionElements>
     </callActivity>
     <exclusiveGateway id="sid-3E2A7A34-F02A-4FB0-B6BC-D4814A8AB9BC" name="Límite de Reagendamiento alcanzado?"></exclusiveGateway>
-    <userTask id="studentResponseAnalysis" name="Analizar Respuesta Estudiante" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="studentResponseAnalysis" name="Analizar Respuesta Estudiante" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "studentResponseAnalysis", "fields": { "acceptedStandardization": { "renderAs": "yesOrNo", "customFieldType": "yesOrNo" }, "commentsConfirmation": { "renderAs": "textArea" }, "acceptedEmail": { "renderAs": "yesOrNo", "customFieldType": "yesOrNo" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="acceptedEmail" name="Evaluación del email del estudiante" type="boolean" variable="acceptedEmail"></activiti:formProperty>
@@ -504,7 +504,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <callActivity id="endingNotification1" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -514,7 +514,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <callActivity id="endingNotification2" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -524,7 +524,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <callActivity id="endingNotification3" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -534,7 +534,7 @@ El BackOffice debe realizar las siguientes tareas en el Sistema Académico para 
     <callActivity id="endingNotification4" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

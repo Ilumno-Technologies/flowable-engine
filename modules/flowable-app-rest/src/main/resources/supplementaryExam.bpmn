@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="supplementaryExamProcess"></participant>
   </collaboration>
-  <process id="supplementaryExamProcess" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="supplementaryExamProcess" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "requestFormsProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_supplementaryExamProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -70,7 +70,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="STARTED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -93,10 +93,10 @@
     <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="authorizeExam" name="Autorizar Examen" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="authorizeExam" name="Autorizar Examen" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "authorizeExam", "fields":{ "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "subject": { "renderAs": "dropdown", "customFieldType": "studentProgramSubjects", "key": "id", "display": "name" }, "reason": { "renderAs": "dropdown", "customFieldType": "supplementaryExamReasons", "key": "id", "display": "name" }, "supportDocumentation": { "renderAs": "fileAttachment" }, "studentComments": { "renderAs": "textArea" }, "isAuthorized": { "renderAs": "boolean" }, "authorizedComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="isAuthorized" name="Examen Supletorio" type="boolean" variable="isAuthorized" required="true"></activiti:formProperty>
@@ -142,7 +142,7 @@
       </extensionElements>
     </callActivity>
     <serviceTask id="sid-C3C69DDC-E781-4BDA-B331-68F50B410D0C" name="Preparar Actualización por Examen no Autorizado" activiti:class="com.ilumno.bps.pdp.task.PrepareUpdate"></serviceTask>
-    <userTask id="manageExam" name="Gestionar Examen Supletorio" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manageExam" name="Gestionar Examen Supletorio" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "manageExam", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "subject": { "renderAs": "dropdown", "customFieldType": "studentProgramSubjects", "key": "id", "display": "name" }, "reason": { "renderAs": "dropdown", "customFieldType": "supplementaryExamReasons", "key": "id", "display": "name" }, "supportDocumentation": { "renderAs": "fileAttachment" }, "studentComments": { "renderAs": "textArea" }, "examDate": { "renderAs": "date", "customFieldType": "dateField" }, "examScore": { "renderAs": "decimal", "fieldOptions": { "showHelpIcon": true } }, "examComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="examDate" name="Fecha de presentación del examen" type="string" variable="examDate" required="true"></activiti:formProperty>
@@ -165,7 +165,7 @@
     <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="requestFormsProcess"></participant>
   </collaboration>
-  <process id="requestFormsProcess" name="Formulario de Solicitudes" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="requestFormsProcess" name="Formulario de Solicitudes" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "requestFormsProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_requestFormsProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -59,7 +59,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -82,10 +82,10 @@
     <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manageRequest" name="Gestionar Solicitud" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{"translationPrefix":"manageRequest","fields":{"currentDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentDocument":{"renderAs":"textBox","customFieldType":"studentDocument","writable":false},"studentCsuSede":{"renderAs":"dropdown","customFieldType":"studentCsuSede","writable":false,"key":"siteId","display":"description"},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"studentAddress":{"renderAs":"textBox","customFieldType":"studentAddress","writable":false},"requestType":{"renderAs":"dropdown","customFieldType":"universityRequestTypes","groupAs":"universityRequestTypes","groupType":"types","key":"id","display":"name"},"request":{"groupAs":"universityRequestTypes","groupType":"requests","parentField":"requestType","renderAs":"dropdown","key":"id","display":"name"},"studentComments":{"renderAs":"textArea"},"result":{"renderAs":"boolean","groupAs":"universityRequestResult","groupType":"result"},"targetArea":{"renderAs":"dropdown","groupAs":"universityRequestResult","groupType":"areas","parentField":"result","customFieldType":"universityRequestAreas","key":"id","display":"name"},"comments":{"renderAs":"textArea"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="result" name="Resolución Primer Contacto" type="boolean" variable="result" required="true"></activiti:formProperty>
@@ -93,7 +93,7 @@
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="manageComments" required="true"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[50]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -117,7 +117,7 @@
       </extensionElements>
     </callActivity>
     <exclusiveGateway id="sid-87E27D93-7750-4AB3-AF61-7C58C0A77699" name="Resolución 1° Contacto?"></exclusiveGateway>
-    <userTask id="validateAndFixRequest" name="Validar y Solucionar Consulta" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="validateAndFixRequest" name="Validar y Solucionar Consulta" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{"translationPrefix":"validateAndFixRequest","fields":{"currentDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentDocument":{"renderAs":"textBox","customFieldType":"studentDocument","writable":false},"studentCsuSede":{"renderAs":"dropdown","customFieldType":"studentCsuSede","writable":false,"key":"siteId","display":"description"},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"studentTelephone":{"renderAs":"textBox","customFieldType":"studentTelephone","writable":false},"studentAddress":{"renderAs":"textBox","customFieldType":"studentAddress","writable":false},"requestType":{"renderAs":"dropdown","customFieldType":"universityRequestTypes","groupAs":"universityRequestTypes","groupType":"types","key":"id","display":"name"},"request":{"groupAs":"universityRequestTypes","groupType":"requests","parentField":"requestType","renderAs":"dropdown","key":"id","display":"name"},"studentComments":{"renderAs":"textArea"},"result":{"renderAs":"boolean","groupAs":"universityRequestResult","groupType":"result"},"targetArea":{"renderAs":"dropdown","groupAs":"universityRequestResult","groupType":"areas","parentField":"result","customFieldType":"universityRequestAreas","key":"id","display":"name"},"manageComments":{"renderAs":"textArea","writable":false},"comments":{"renderAs":"textArea"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="validateComments" required="true"></activiti:formProperty>
@@ -157,7 +157,7 @@
     <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

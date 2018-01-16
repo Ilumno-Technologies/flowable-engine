@@ -3,10 +3,10 @@
   <collaboration id="Collaboration">
     <participant id="reAdmissionPool" name="Reintegro pool" processRef="reAdmissionProcess"></participant>
   </collaboration>
-  <process id="reAdmissionProcess" name="Reintegro" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="reAdmissionProcess" name="Reintegro" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{ "translationPrefix": "requestFormsProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_reAdmissionProcess">
-      <lane id="lane1" name="Estudiante (Application/Student)">
+      <lane id="lane1" name="Estudiante (APPLICATION/Student)">
         <flowNodeRef>Notificacion</flowNodeRef>
         <flowNodeRef>initialForm</flowNodeRef>
         <flowNodeRef>createCRMCase</flowNodeRef>
@@ -60,9 +60,10 @@
         <flowNodeRef>endingNotification2</flowNodeRef>
         <flowNodeRef>endingNotification3</flowNodeRef>
         <flowNodeRef>endingNotification4</flowNodeRef>
+        <flowNodeRef>exclusivegateway2</flowNodeRef>
+        <flowNodeRef>callProgramChange</flowNodeRef>
       </lane>
       <lane id="lane3" name="Registro y Control">
-        <flowNodeRef>sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5</flowNodeRef>
         <flowNodeRef>studentResponseAnalysis</flowNodeRef>
         <flowNodeRef>sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9</flowNodeRef>
         <flowNodeRef>updateCRMCase4</flowNodeRef>
@@ -75,16 +76,20 @@
         <flowNodeRef>sid-357FF1BC-5C81-4805-AE81-176697B169C3</flowNodeRef>
         <flowNodeRef>userNotification4</flowNodeRef>
         <flowNodeRef>endingNotification1</flowNodeRef>
+        <flowNodeRef>sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5</flowNodeRef>
       </lane>
     </laneSet>
     <startEvent id="initialForm" name="Inicio" activiti:formKey="startForm">
-      <documentation>{ "translationPrefix": "initForm", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone" }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "studentComments": { "renderAs": "textArea" } } }</documentation>
+      <documentation>{ "translationPrefix": "initForm", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone" }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "infoLabel": { "renderAs": "staticLabel", "afterProp": "programs" }, "changedProgram": { "renderAs": "boolean", "groupAs": "yesNoChangeProgram", "groupType": "condition" }, "newProgram": { "customFieldType": "universityPrograms", "groupAs": "yesNoChangeProgram", "groupType": "programs", "key": "id", "required": true, "display": "name", "renderAs": "dropdown", "customFieldTypeParamsOverride": { "modalityId": { "type": "queryString", "from": "userContextInfo", "path": "program.modalityId" }, "levelId": { "type": "queryString", "from": "userContextInfo", "path": "program.levelId" } } }, "newSchedule": { "groupAs": "yesNoChangeProgram", "customFieldType": "universitySchedules", "groupType": "schedules", "parentField": "newProgram", "required": true, "renderAs": "enum", "key": "id", "display": "name" }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "studentComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="currentDate" name="Nombre" type="string" variable="currentDate"></activiti:formProperty>
         <activiti:formProperty id="studentId" name="ID del Estudiante" type="string" variable="studentId"></activiti:formProperty>
         <activiti:formProperty id="student" name="Nombre" type="string" variable="student"></activiti:formProperty>
         <activiti:formProperty id="studentDocument" name="Documento del estudiante" type="string" variable="studentDocument"></activiti:formProperty>
         <activiti:formProperty id="programs" name="Programas Suspendidos/Cancelados" type="string" variable="programs" required="true"></activiti:formProperty>
+        <activiti:formProperty id="changedProgram" name="Desea cambiar de programa?" type="string" variable="changedProgram" required="true"></activiti:formProperty>
+        <activiti:formProperty id="newProgram" name="Nuevo programa" type="string" variable="newProgram"></activiti:formProperty>
+        <activiti:formProperty id="newSchedule" name="Nueva Jornada" type="string" variable="newSchedule"></activiti:formProperty>
         <activiti:formProperty id="studentTelephone" name="Teléfono de Contacto" type="string" variable="studentTelephone"></activiti:formProperty>
         <activiti:formProperty id="studentEmail" name="Email del Estudiante" type="string" variable="studentEmail"></activiti:formProperty>
         <activiti:formProperty id="modality" name="Modalidad" type="string" variable="modality"></activiti:formProperty>
@@ -101,7 +106,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -124,7 +129,7 @@
     <callActivity id="notifyGroups" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="Reingreso" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <serviceTask id="obtainValues" name="Obtener Valores para Validación" activiti:class="com.ilumno.bps.pdp.task.GetValuesToValidateTask">
@@ -144,10 +149,10 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <callActivity id="notifyGroups1" name="Enviar Notificación Director" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="simple" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="scheduleAppointment" name="Agendar Cita Reingreso" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="scheduleAppointment" name="Agendar Cita Reingreso" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "scheduleAppointment", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "studentComments": { "renderAs": "textArea" }, "appointmentDate": { "renderAs": "date", "dateObject": false, "fieldOptions": { "format": "short" } } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="appointmentDate" name="Fecha de la Cita" type="string" variable="appointmentDate"></activiti:formProperty>
@@ -170,7 +175,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="appointmentChecklist" name="Confirmar Asistencia" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="appointmentChecklist" name="Confirmar Asistencia" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "appointmentChecklist", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "studentComments": { "renderAs": "textArea" }, "appointmentDate": { "renderAs": "date", "writable": false, "dateObject": false, "fieldOptions": { "format": "short" } }, "studentAttended": { "renderAs": "boolean" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="studentAttended" name="Alumno atendió a la reunión" type="boolean" variable="studentAttended" required="true"></activiti:formProperty>
@@ -205,7 +210,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="validateStandardization" name="Validar Homologación" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="validateStandardization" name="Validar Homologación" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "validateStandardization", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "isReAdmissionPreApproved": { "groupAs": "standardization", "groupType": "condition", "renderAs": "boolean" }, "standarizationFile": { "groupAs": "standardization", "groupType": "file", "parentField": "isReAdmissionPreApproved", "renderAs": "fileAttachment" }, "validateStandarizationComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="isReAdmissionPreApproved" name="esta pre aprobado el reingreso ?" type="boolean" variable="isReAdmissionPreApproved" required="true"></activiti:formProperty>
@@ -238,8 +243,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
       </extensionElements>
     </callActivity>
     <endEvent id="endByOutdatedProgram" name="End"></endEvent>
-    <serviceTask id="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" name="Registrar Reingreso" activiti:class="com.ilumno.bps.pdp.task.RegisterReAdmissionTask"></serviceTask>
-    <userTask id="studentResponseAnalysis" name="Analizar Respuesta Estudiante" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="studentResponseAnalysis" name="Analizar Respuesta Estudiante" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "studentResponseAnalysis", "fields": { "currentDate": { "renderAs": "date", "customFieldType": "dateField", "writable": false }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentDocument": { "renderAs": "textBox", "customFieldType": "studentDocument", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "programs": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "modality": { "renderAs": "enum", "customFieldType": "studentProgramModality", "key": "modalityId", "display": "description", "writable": false }, "acceptedStandardization": { "renderAs": "boolean" }, "commentsConfirmation": { "renderAs": "textArea" }, "standardizationConfirmed": { "renderAs": "boolean" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="standardizationConfirmed" name="Evaluación del email del estudiante" type="boolean" variable="standardizationConfirmed"></activiti:formProperty>
@@ -257,7 +261,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <exclusiveGateway id="sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9"></exclusiveGateway>
+    <exclusiveGateway id="sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9" name="Reingreso Aprobado?"></exclusiveGateway>
     <callActivity id="updateCRMCase4" name="Actualizar Caso CRM" calledElement="crmUpdateProcess">
       <extensionElements>
         <activiti:in sourceExpression="close" target="status"></activiti:in>
@@ -278,7 +282,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <sequenceFlow id="sid-3449CAD8-2976-4E54-88CF-A3237D9A5E44" sourceRef="updateCRMCase2" targetRef="userNotification2"></sequenceFlow>
     <sequenceFlow id="sid-40D76E98-6852-430C-8668-65302AE909BD" sourceRef="userNotification2" targetRef="endingNotification3"></sequenceFlow>
     <sequenceFlow id="sid-E4DA4CF7-1F7D-4E9E-8FA7-B3EBAE9120F8" sourceRef="obtainValues" targetRef="sid-D2F26997-BCD4-49E5-9085-7E5009482FBD"></sequenceFlow>
-    <sequenceFlow id="sid-3D1C8DF2-2F86-4301-8903-2873A974DFBF" name="Mismo catálogo sin cohorte / Diferente Catálogo" sourceRef="sid-D2F26997-BCD4-49E5-9085-7E5009482FBD" targetRef="notifyGroups1">
+    <sequenceFlow id="sid-3D1C8DF2-2F86-4301-8903-2873A974DFBF" name="Mismo catálogo sin cohorte / Diferente Catálogo" sourceRef="sid-D2F26997-BCD4-49E5-9085-7E5009482FBD" targetRef="exclusivegateway2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${sameCatalogWithoutCohort}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-8A72471A-AA49-4C4A-AEB0-21356263A83E" sourceRef="notifyGroups1" targetRef="scheduleAppointment"></sequenceFlow>
@@ -307,14 +311,13 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${standardizationConfirmed}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-7D64C9AB-07A3-408E-876B-A946C3113100" sourceRef="userNotification4" targetRef="endingNotification1"></sequenceFlow>
-    <sequenceFlow id="sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A" sourceRef="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" targetRef="updateCRMCase4"></sequenceFlow>
     <sequenceFlow id="sid-49E1DB1F-4FAE-4C41-89C6-6069D61123DB" sourceRef="updateCRMCase4" targetRef="userNotification4"></sequenceFlow>
     <sequenceFlow id="sid-357FF1BC-5C81-4805-AE81-176697B169C3" name="No" sourceRef="sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9" targetRef="updateCRMCase4">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!standardizationConfirmed}]]></conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow1" sourceRef="validateStandardization" targetRef="exclusivegateway1"></sequenceFlow>
-    <userTask id="confirmStandardization" name="Confirmar  Homologación" activiti:candidateGroups="Application/Student">
+    <userTask id="confirmStandardization" name="Confirmar  Homologación" activiti:candidateGroups="APPLICATION/Student">
       <documentation>{ "translationPrefix": "confirmStandardization", "fields": { "isReAdmissionPreApproved": { "groupAs": "standardization", "groupType": "condition", "renderAs": "boolean" }, "standarizationFile": { "groupAs": "standardization", "groupType": "file", "parentField": "isReAdmissionPreApproved", "renderAs": "fileAttachment", "writable": false }, "validateStandarizationComments": { "renderAs": "textArea" }, "acceptedStandardization": { "renderAs": "boolean" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="acceptedStandardization" name="Homologación Aceptada" type="boolean" variable="acceptedStandardization"></activiti:formProperty>
@@ -351,7 +354,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <callActivity id="endingNotification1" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -361,7 +364,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <callActivity id="endingNotification2" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -371,7 +374,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <callActivity id="endingNotification3" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -381,7 +384,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     <callActivity id="endingNotification4" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -389,23 +392,66 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
     </callActivity>
     <sequenceFlow id="flow10" sourceRef="endingNotification4" targetRef="endByOutdatedProgram"></sequenceFlow>
     <sequenceFlow id="flow11" sourceRef="Notificacion" targetRef="createCRMCase"></sequenceFlow>
+    <serviceTask id="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" name="Registrar Reingreso" activiti:class="com.ilumno.bps.pdp.task.RegisterReAdmissionTask">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[75]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A" sourceRef="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" targetRef="updateCRMCase4"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway2" name="Cambio de programa?"></exclusiveGateway>
+    <sequenceFlow id="flow13" name="Si" sourceRef="exclusivegateway2" targetRef="callProgramChange">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${changedProgram}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow14" name="No" sourceRef="exclusivegateway2" targetRef="notifyGroups1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!changedProgram}]]></conditionExpression>
+    </sequenceFlow>
+    <callActivity id="callProgramChange" name="Cambio de Programa" calledElement="programChangeProcess">
+      <extensionElements>
+        <activiti:in sourceExpression="${true}" target="embedded"></activiti:in>
+        <activiti:in sourceExpression="${true}" target="validation"></activiti:in>
+        <activiti:in sourceExpression="${true}" target="newArea"></activiti:in>
+        <activiti:in source="owner" target="owner"></activiti:in>
+        <activiti:in source="currentDate" target="actualDate"></activiti:in>
+        <activiti:in source="studentId" target="studentId"></activiti:in>
+        <activiti:in source="student" target="student"></activiti:in>
+        <activiti:in source="studentEmail" target="studentEmail"></activiti:in>
+        <activiti:in source="studentTelephone" target="studentTelephone"></activiti:in>
+        <activiti:in source="programs" target="program"></activiti:in>
+        <activiti:in source="newProgram" target="newProgram"></activiti:in>
+        <activiti:in source="newSchedule" target="newSchedule"></activiti:in>
+        <activiti:in source="studentComments" target="studentComments"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow16" sourceRef="callProgramChange" targetRef="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
     <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
       <bpmndi:BPMNShape bpmnElement="reAdmissionPool" id="BPMNShape_reAdmissionPool">
-        <omgdc:Bounds height="956.0" width="2014.0" x="0.0" y="15.0"></omgdc:Bounds>
+        <omgdc:Bounds height="1006.0" width="2011.0" x="0.0" y="15.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="lane1" id="BPMNShape_lane1">
-        <omgdc:Bounds height="225.0" width="1984.0" x="30.0" y="15.0"></omgdc:Bounds>
+        <omgdc:Bounds height="225.0" width="1981.0" x="30.0" y="15.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="lane2" id="BPMNShape_lane2">
-        <omgdc:Bounds height="281.0" width="1984.0" x="30.0" y="240.0"></omgdc:Bounds>
+        <omgdc:Bounds height="391.0" width="1981.0" x="30.0" y="240.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="lane3" id="BPMNShape_lane3">
-        <omgdc:Bounds height="450.0" width="1984.0" x="30.0" y="521.0"></omgdc:Bounds>
+        <omgdc:Bounds height="390.0" width="1981.0" x="30.0" y="631.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="initialForm" id="BPMNShape_initialForm">
         <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="92.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Notificacion" id="BPMNShape_Notificacion">
+        <omgdc:Bounds height="55.0" width="105.0" x="210.0" y="82.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="createCRMCase" id="BPMNShape_createCRMCase">
         <omgdc:Bounds height="80.0" width="100.0" x="355.0" y="70.0"></omgdc:Bounds>
@@ -459,31 +505,28 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdc:Bounds height="35.0" width="35.0" x="1840.0" y="314.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="updateCRMCase1" id="BPMNShape_updateCRMCase1">
-        <omgdc:Bounds height="69.0" width="139.0" x="310.0" y="420.0"></omgdc:Bounds>
+        <omgdc:Bounds height="69.0" width="139.0" x="310.0" y="500.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="userNotification1" id="BPMNShape_userNotification1">
-        <omgdc:Bounds height="69.0" width="135.0" x="477.0" y="420.0"></omgdc:Bounds>
+        <omgdc:Bounds height="69.0" width="135.0" x="477.0" y="500.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endByOutdatedProgram" id="BPMNShape_endByOutdatedProgram">
-        <omgdc:Bounds height="35.0" width="35.0" x="770.0" y="437.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" id="BPMNShape_sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5">
-        <omgdc:Bounds height="80.0" width="100.0" x="1035.0" y="555.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="790.0" y="517.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="studentResponseAnalysis" id="BPMNShape_studentResponseAnalysis">
-        <omgdc:Bounds height="80.0" width="100.0" x="1890.0" y="555.0"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="1890.0" y="665.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9" id="BPMNShape_sid-037A909A-C551-45C9-9ECB-CCDE0E37E5E9">
-        <omgdc:Bounds height="40.0" width="40.0" x="1350.0" y="574.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="1350.0" y="684.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="updateCRMCase4" id="BPMNShape_updateCRMCase4">
-        <omgdc:Bounds height="69.0" width="101.0" x="1320.0" y="738.0"></omgdc:Bounds>
+        <omgdc:Bounds height="69.0" width="101.0" x="1320.0" y="848.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="userNotification4" id="BPMNShape_userNotification4">
-        <omgdc:Bounds height="69.0" width="135.0" x="1460.0" y="738.0"></omgdc:Bounds>
+        <omgdc:Bounds height="69.0" width="135.0" x="1460.0" y="848.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endByReAdmissionWithCohortAndSameProgram" id="BPMNShape_endByReAdmissionWithCohortAndSameProgram">
-        <omgdc:Bounds height="35.0" width="35.0" x="1760.0" y="755.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="1760.0" y="865.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="1560.0" y="275.0"></omgdc:Bounds>
@@ -498,7 +541,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdc:Bounds height="69.0" width="131.0" x="1515.0" y="399.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endingNotification1" id="BPMNShape_endingNotification1">
-        <omgdc:Bounds height="55.0" width="105.0" x="1630.0" y="745.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="1630.0" y="855.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endingNotification2" id="BPMNShape_endingNotification2">
         <omgdc:Bounds height="55.0" width="105.0" x="1698.0" y="304.0"></omgdc:Bounds>
@@ -507,10 +550,16 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdc:Bounds height="55.0" width="105.0" x="1290.0" y="427.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endingNotification4" id="BPMNShape_endingNotification4">
-        <omgdc:Bounds height="55.0" width="105.0" x="640.0" y="427.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="640.0" y="507.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Notificacion" id="BPMNShape_Notificacion">
-        <omgdc:Bounds height="55.0" width="105.0" x="210.0" y="82.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5" id="BPMNShape_sid-936ECC6A-B4C7-4A9C-8E4A-6AB343577EB5">
+        <omgdc:Bounds height="80.0" width="100.0" x="880.0" y="665.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="400.0" y="275.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="callProgramChange" id="BPMNShape_callProgramChange">
+        <omgdc:Bounds height="51.0" width="151.0" x="410.0" y="387.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-D2BB2A87-9D7E-48F7-B6BE-4C9343F07AAB" id="BPMNEdge_sid-D2BB2A87-9D7E-48F7-B6BE-4C9343F07AAB">
         <omgdi:waypoint x="145.0" y="109.0"></omgdi:waypoint>
@@ -546,9 +595,9 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
       <bpmndi:BPMNEdge bpmnElement="sid-3D1C8DF2-2F86-4301-8903-2873A974DFBF" id="BPMNEdge_sid-3D1C8DF2-2F86-4301-8903-2873A974DFBF">
         <omgdi:waypoint x="270.0" y="365.0"></omgdi:waypoint>
         <omgdi:waypoint x="269.0" y="294.0"></omgdi:waypoint>
-        <omgdi:waypoint x="611.0" y="295.0"></omgdi:waypoint>
+        <omgdi:waypoint x="400.0" y="295.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="56.0" width="100.0" x="266.0" y="210.0"></omgdc:Bounds>
+          <omgdc:Bounds height="56.0" width="100.0" x="266.0" y="264.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-8A72471A-AA49-4C4A-AEB0-21356263A83E" id="BPMNEdge_sid-8A72471A-AA49-4C4A-AEB0-21356263A83E">
@@ -582,7 +631,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdi:waypoint x="885.0" y="365.0"></omgdi:waypoint>
         <omgdi:waypoint x="886.0" y="335.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="13.0" x="892.0" y="372.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="13.0" x="886.0" y="308.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-9D8B27ED-D576-4D58-9717-7905D328C5C8" id="BPMNEdge_sid-9D8B27ED-D576-4D58-9717-7905D328C5C8">
@@ -590,31 +639,31 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdi:waypoint x="885.0" y="454.0"></omgdi:waypoint>
         <omgdi:waypoint x="930.0" y="454.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="9.0" x="849.0" y="365.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="9.0" x="888.0" y="458.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-55DCC48E-5F9C-4E7B-B9E3-04246B4ABB2B" id="BPMNEdge_sid-55DCC48E-5F9C-4E7B-B9E3-04246B4ABB2B">
         <omgdi:waypoint x="270.0" y="405.0"></omgdi:waypoint>
-        <omgdi:waypoint x="269.0" y="595.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1035.0" y="595.0"></omgdi:waypoint>
+        <omgdi:waypoint x="269.0" y="704.0"></omgdi:waypoint>
+        <omgdi:waypoint x="880.0" y="705.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="42.0" width="100.0" x="159.0" y="435.0"></omgdc:Bounds>
+          <omgdc:Bounds height="42.0" width="100.0" x="159.0" y="447.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-29EA287E-5575-4604-8A9B-ACBBBFAA4F17" id="BPMNEdge_sid-29EA287E-5575-4604-8A9B-ACBBBFAA4F17">
-        <omgdi:waypoint x="449.0" y="454.0"></omgdi:waypoint>
-        <omgdi:waypoint x="477.0" y="454.0"></omgdi:waypoint>
+        <omgdi:waypoint x="449.0" y="534.0"></omgdi:waypoint>
+        <omgdi:waypoint x="477.0" y="534.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-C1C8A8D1-B937-499A-BD1E-B788A7F2A6FA" id="BPMNEdge_sid-C1C8A8D1-B937-499A-BD1E-B788A7F2A6FA">
-        <omgdi:waypoint x="612.0" y="454.0"></omgdi:waypoint>
-        <omgdi:waypoint x="640.0" y="454.0"></omgdi:waypoint>
+        <omgdi:waypoint x="612.0" y="534.0"></omgdi:waypoint>
+        <omgdi:waypoint x="640.0" y="534.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-7798C3F2-4452-475E-912F-5703FA8AB0FD" id="BPMNEdge_sid-7798C3F2-4452-475E-912F-5703FA8AB0FD">
         <omgdi:waypoint x="290.0" y="385.0"></omgdi:waypoint>
         <omgdi:waypoint x="379.0" y="384.0"></omgdi:waypoint>
-        <omgdi:waypoint x="379.0" y="420.0"></omgdi:waypoint>
+        <omgdi:waypoint x="379.0" y="500.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="58.0" x="319.0" y="332.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="58.0" x="319.0" y="372.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-B7D2BF4F-30C7-4DE7-98E7-4AEA210B20C9" id="BPMNEdge_sid-B7D2BF4F-30C7-4DE7-98E7-4AEA210B20C9">
@@ -625,37 +674,32 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-E91A8DA6-CA4A-4A24-B93C-4FB3B7204828" id="BPMNEdge_sid-E91A8DA6-CA4A-4A24-B93C-4FB3B7204828">
-        <omgdi:waypoint x="1890.0" y="595.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1390.0" y="594.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1890.0" y="705.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1390.0" y="704.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="42.0" width="100.0" x="1890.0" y="595.0"></omgdc:Bounds>
+          <omgdc:Bounds height="42.0" width="100.0" x="1875.0" y="704.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-568751E8-AA5D-467B-B5D7-71475B378C79" id="BPMNEdge_sid-568751E8-AA5D-467B-B5D7-71475B378C79">
-        <omgdi:waypoint x="1350.0" y="594.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1135.0" y="595.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1350.0" y="704.0"></omgdi:waypoint>
+        <omgdi:waypoint x="980.0" y="705.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="9.0" x="1310.0" y="554.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="9.0" x="1336.0" y="664.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-7D64C9AB-07A3-408E-876B-A946C3113100" id="BPMNEdge_sid-7D64C9AB-07A3-408E-876B-A946C3113100">
-        <omgdi:waypoint x="1595.0" y="772.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1630.0" y="772.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A" id="BPMNEdge_sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A">
-        <omgdi:waypoint x="1085.0" y="635.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1084.0" y="772.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1320.0" y="772.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1595.0" y="882.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1630.0" y="882.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-49E1DB1F-4FAE-4C41-89C6-6069D61123DB" id="BPMNEdge_sid-49E1DB1F-4FAE-4C41-89C6-6069D61123DB">
-        <omgdi:waypoint x="1421.0" y="772.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1460.0" y="772.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1421.0" y="882.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1460.0" y="882.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-357FF1BC-5C81-4805-AE81-176697B169C3" id="BPMNEdge_sid-357FF1BC-5C81-4805-AE81-176697B169C3">
-        <omgdi:waypoint x="1370.0" y="614.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1370.0" y="738.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1370.0" y="724.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1370.0" y="848.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="13.0" x="1375.0" y="617.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="13.0" x="1378.0" y="730.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
@@ -664,7 +708,7 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-083FD0DB-8BC3-41C5-89F9-D943D2E6C02D" id="BPMNEdge_sid-083FD0DB-8BC3-41C5-89F9-D943D2E6C02D">
         <omgdi:waypoint x="1942.0" y="175.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1940.0" y="555.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1940.0" y="665.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
         <omgdi:waypoint x="1580.0" y="275.0"></omgdi:waypoint>
@@ -690,8 +734,8 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdi:waypoint x="1750.0" y="359.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-        <omgdi:waypoint x="1735.0" y="772.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1760.0" y="772.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1735.0" y="882.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1760.0" y="882.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
         <omgdi:waypoint x="1803.0" y="331.0"></omgdi:waypoint>
@@ -702,12 +746,37 @@ El WorkFlow mediante una consulta al Sistema Académico realiza las siguientes v
         <omgdi:waypoint x="1420.0" y="454.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-        <omgdi:waypoint x="745.0" y="454.0"></omgdi:waypoint>
-        <omgdi:waypoint x="770.0" y="454.0"></omgdi:waypoint>
+        <omgdi:waypoint x="745.0" y="534.0"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0" y="534.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
         <omgdi:waypoint x="315.0" y="109.0"></omgdi:waypoint>
         <omgdi:waypoint x="355.0" y="110.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A" id="BPMNEdge_sid-9F7462F0-06F8-49DC-A7F2-F36E5D109B9A">
+        <omgdi:waypoint x="930.0" y="745.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1370.0" y="848.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="420.0" y="315.0"></omgdi:waypoint>
+        <omgdi:waypoint x="422.0" y="361.0"></omgdi:waypoint>
+        <omgdi:waypoint x="485.0" y="361.0"></omgdi:waypoint>
+        <omgdi:waypoint x="485.0" y="387.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="9.0" x="428.0" y="325.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="440.0" y="295.0"></omgdi:waypoint>
+        <omgdi:waypoint x="611.0" y="295.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="13.0" x="461.0" y="259.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="561.0" y="412.0"></omgdi:waypoint>
+        <omgdi:waypoint x="848.0" y="412.0"></omgdi:waypoint>
+        <omgdi:waypoint x="930.0" y="665.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

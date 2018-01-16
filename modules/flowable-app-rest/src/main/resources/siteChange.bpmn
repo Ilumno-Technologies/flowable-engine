@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="siteChangeProcess"></participant>
   </collaboration>
-  <process id="siteChangeProcess" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="siteChangeProcess" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "siteChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_siteChangeProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -87,7 +87,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="STARTED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -110,7 +110,7 @@
     <callActivity id="sendNotificationToGroup" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <serviceTask id="obtainValues" name="Obtener Valores" activiti:class="com.ilumno.bps.pdp.task.BannerFetchModalityData"></serviceTask>
@@ -141,7 +141,7 @@
         <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="manageDebtFree" name="Gestionar Paz y Salvo" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manageDebtFree" name="Gestionar Paz y Salvo" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "manageDebtFree", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "newSite": { "renderAs": "dropdown", "customFieldType": "programCsuSedes", "key": "siteId", "display": "description" }, "studentComments": { "renderAs": "textArea" }, "isDebtFree": { "renderAs": "boolean", "groupAs": "pazYSalvo", "groupType": "validation" }, "debtFree": { "renderAs": "fileAttachment", "groupAs": "pazYSalvo", "groupType": "file", "parentField": "isDebtFree" }, "debtFreeComments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="isDebtFree" name="Esta Libre de Deuda ?" type="boolean" variable="isDebtFree" required="true"></activiti:formProperty>
@@ -149,7 +149,7 @@
         <activiti:formProperty id="debtFreeComments" name="Observacioes" type="string" variable="debtFreeComments" required="true"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[50]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -168,7 +168,7 @@
         <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="registerPendingActivity" name="Registrar Trámite de Pendientes" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="registerPendingActivity" name="Registrar Trámite de Pendientes" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "registerPendingActivity", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "studentTelephone": { "renderAs": "textBox", "customFieldType": "studentTelephone", "writable": false }, "newSite": { "renderAs": "dropdown", "customFieldType": "programCsuSedes", "key": "siteId", "display": "description" }, "studentComments": { "renderAs": "textArea" }, "isWithinANS": { "renderAs": "boolean" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="isWithinANS" name="El tramite esta dentro de ANS ?" type="boolean" variable="isWithinANS" required="true"></activiti:formProperty>
@@ -232,7 +232,7 @@
     <sequenceFlow id="sid-32903661-DA56-4E86-8114-78D6C0297F56" name="Si" sourceRef="sid-378EA655-81B1-4868-9854-FB131D2DBC96" targetRef="updateSite"></sequenceFlow>
     <sequenceFlow id="sid-76A2350A-6874-4142-882E-5507FE54D03C" sourceRef="updateSite" targetRef="sid-AF438EC8-8174-4B1B-B6CA-24E7BB6783BF"></sequenceFlow>
     <sequenceFlow id="sid-817F4926-B6E5-4952-B347-FC979D24FF6A" sourceRef="sid-AF438EC8-8174-4B1B-B6CA-24E7BB6783BF" targetRef="updateCRMCase1"></sequenceFlow>
-    <userTask id="programChangeConfirmation" name="Confirmacion Cambio de Programa" activiti:candidateGroups="Application/Student">
+    <userTask id="programChangeConfirmation" name="Confirmacion Cambio de Programa" activiti:candidateGroups="APPLICATION/Student">
       <documentation>{ "translationPrefix": "programChangeConfirmation", "fields": { "infoLabel": { "renderAs": "staticLabel" }, "programChangeConfirmed": { "renderAs": "boolean", "groupAs": "sedeProgramChangeConfirm", "groupType": "confirmation" }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "groupAs": "sedeProgramChangeConfirm", "groupType": "program" }, "newProgram": { "customFieldType": "universityPrograms", "key": "id", "display": "name", "renderAs": "dropdown", "groupAs": "sedeProgramChangeConfirm", "groupType": "programs" }, "newSchedule": { "groupAs": "sedeProgramChangeConfirm", "groupType": "schedules", "parentField": "newProgram", "renderAs": "enum", "key": "id", "display": "name" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="programChangeConfirmed" name="Acepta el cambio de programa?" type="boolean" variable="programChangeConfirmed" required="true"></activiti:formProperty>
@@ -263,7 +263,7 @@
     <callActivity id="endingNotification" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

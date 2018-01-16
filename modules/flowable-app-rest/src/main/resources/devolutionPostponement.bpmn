@@ -3,10 +3,10 @@
   <collaboration id="Collaboration">
     <participant id="devolutionPostponementPool" name="Reintegro pool" processRef="devolutionPostponementProcess"></participant>
   </collaboration>
-  <process id="devolutionPostponementProcess" name="Reintegro pool" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="devolutionPostponementProcess" name="Reintegro pool" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "devolutionPostponementProcess", "estimatedDuration": 5, "sideComponents":[{"":""},{"":""},{"":""}]}</documentation>
     <laneSet id="laneSet_devolutionPostponementProcess">
-      <lane id="lane1" name="Estudiante (Application/Student)">
+      <lane id="lane1" name="Estudiante (APPLICATION/Student)">
         <flowNodeRef>start</flowNodeRef>
         <flowNodeRef>createCRMCase</flowNodeRef>
         <flowNodeRef>notifyUser</flowNodeRef>
@@ -92,7 +92,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="NEW_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -115,21 +115,21 @@
     <callActivity id="notifyGroups" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="requestForm" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <serviceTask id="obtainValues" name="Obtener Valores para Validación" activiti:class="com.ilumno.bps.pdp.task.GetValuesToValidateTask">
       <documentation>Validar tipo</documentation>
     </serviceTask>
     <exclusiveGateway id="sid-D2F26997-BCD4-49E5-9085-7E5009482FBD"></exclusiveGateway>
-    <userTask id="validateDocumentation" name="Validar documentación" activiti:candidateGroups="Application/BackOffice">
+    <userTask id="validateDocumentation" name="Validar documentación" activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "validateDocumentation", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox" }, "student": { "renderAs": "textBox" }, "identification": { "renderAs": "textBox" }, "cityId": { "renderAs": "textBox" }, "studentSite": { "renderAs": "dropdown", "key": "siteId", "display": "description" }, "studentEmail": { "renderAs": "textBox" }, "contactPhone": { "renderAs": "textBox" }, "requestType": { "renderAs": "dropdown", "groupAs": "devolutionRequestType" }, "requestTypeValue": { "renderAs": "hidden", "groupAs": "devolutionRequestType", "parentField": "requestType" }, "studentComments": { "renderAs": "textArea" }, "informativeLabel": { "renderAs": "staticLabel", "groupAs": "devolutionRequestType" }, "identificationCopy": { "renderAs": "fileAttachment", "groupAs": "devolutionRequestType" }, "bankStatement": { "renderAs": "fileAttachment", "groupAs": "devolutionRequestType" }, "returnToThirdParty": { "renderAs": "yesOrNo", "customFieldType": "yesOrNo", "groupAs": "devolutionRequestType", "required": true }, "thirdPartyIdentification": { "renderAs": "fileAttachment", "groupAs": "devolutionRequestType" }, "authorizationLetter": { "renderAs": "fileAttachment", "groupAs": "devolutionRequestType" }, "returnLabel": { "renderAs": "staticLabel", "groupAs": "devolutionRequestType" }, "accountOwner": { "renderAs": "string", "groupAs": "devolutionRequestType" }, "documentTypes": { "renderAs": "dropdown", "groupAs": "devolutionRequestType" }, "accountDocumentNumber": { "renderAs": "string", "groupAs": "devolutionRequestType" }, "bankId": { "renderAs": "dropdown", "groupAs": "devolutionRequestType" }, "accountType": { "renderAs": "dropdown", "groupAs": "devolutionRequestType" }, "accountNumber": { "renderAs": "string", "groupAs": "devolutionRequestType" }, "documentationIsValid": { "renderAs": "boolean" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="documentationIsValid" name="Solicitud Aprobada?" type="boolean" variable="documentationIsValid" required="true"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="comments" required="false"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[50]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -155,7 +155,7 @@
       </extensionElements>
     </callActivity>
     <endEvent id="sid-6DF2E338-D316-45B8-9D47-8B4B42AE30E0"></endEvent>
-    <userTask id="manageRequest" name="Gestionar Devolución " activiti:candidateGroups="Application/BackOffice">
+    <userTask id="manageRequest" name="Gestionar Devolución " activiti:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "manageRequest", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox" }, "student": { "renderAs": "textBox" }, "identification": { "renderAs": "textBox" }, "cityId": { "renderAs": "textBox" }, "studentSite": { "renderAs": "dropdown", "key": "siteId", "display": "description" }, "studentEmail": { "renderAs": "textBox" }, "contactPhone": { "renderAs": "textBox" }, "requestType": { "renderAs": "dropdown", "groupAs": "devolutionRequestType" }, "returnRequest": { "renderAs": "boolean", "groupAs": "standardization", "groupType": "condition" }, "validateRequestAuthorizationLetter": { "renderAs": "fileAttachment", "groupAs": "standardization", "groupType": "file", "parentField": "returnRequest" }, "comments": { "renderAs": "textArea" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="returnRequest" name="Solicitud de Devolución" type="boolean" variable="returnRequest" required="true"></activiti:formProperty>
@@ -177,7 +177,7 @@
     <callActivity id="notifyGroups1" name="Enviar Notificación Estado Solicitud" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="Reingreso" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <serviceTask id="refundOfMoney" name="Aplicar Devolución en Banner" activiti:class="com.ilumno.bps.pdp.task.RefundOfMoneyTask"></serviceTask>
@@ -197,7 +197,7 @@
     <callActivity id="endingNotification1" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -206,7 +206,7 @@
     <callActivity id="endingNotification2" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -215,7 +215,7 @@
     <callActivity id="endingNotification3" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>

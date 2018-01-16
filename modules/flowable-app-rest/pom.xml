@@ -603,7 +603,6 @@
     <dependency>
         <groupId>org.ilumno.bps</groupId>
         <artifactId>pdp-libs</artifactId>
-        <scope>test</scope>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

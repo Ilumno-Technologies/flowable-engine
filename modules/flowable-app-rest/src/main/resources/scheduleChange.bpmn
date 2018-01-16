@@ -3,7 +3,7 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="scheduleChangeProcess"></participant>
   </collaboration>
-  <process id="scheduleChangeProcess" name="Cambio de Jornada (Manual)" isExecutable="true" activiti:candidateStarterGroups="Application/Student">
+  <process id="scheduleChangeProcess" name="Cambio de Jornada (Manual)" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "scheduleChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <laneSet id="laneSet_scheduleChangeProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -55,7 +55,7 @@
       </lane>
     </laneSet>
     <startEvent id="startForm" name="Inicio" activiti:formKey="formularioInicio">
-      <documentation>{ "translationPrefix": "initialForm", "fields": { "actualDate": {"renderAs": "date", "customFieldType": "dateField"}, "studentId": {"renderAs": "textBox", "customFieldType": "studentId", "writable": false}, "student": {"renderAs": "textBox", "customFieldType": "studentName", "writable": false}, "studentEmail": {"renderAs": "textBox", "customFieldType": "studentEmail", "writable": false}, "program": {"renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false}, "schedule": { "renderAs": "enum", "customFieldType": "studentProgramTurns", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "customFieldType": "universitySchedules", "customFieldTypeParamsOverride": { "levelId": { "type": "queryString", "from": "userContextInfo", "path": "program.levelId" }, "siteId": { "type": "queryString", "from": "userContextInfo", "path": "program.siteId" } }, "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "studentComments": {"renderAs": "textArea"}, "supportDocuments": {"renderAs": "fileAttachment"} } }</documentation>
+      <documentation>{ "translationPrefix": "initialForm", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "schedule": { "renderAs": "enum", "customFieldType": "studentProgramTurns", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "customFieldType": "universitySchedules", "customFieldTypeParamsOverride": { "levelId": { "type": "queryString", "from": "userContextInfo", "path": "program.levelId" }, "siteId": { "type": "queryString", "from": "userContextInfo", "path": "program.siteId" } }, "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "studentComments": { "renderAs": "textArea" }, "supportDocuments": { "renderAs": "fileAttachment" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="actualDate" name="Fecha Actual" type="date" variable="currentDate" datePattern="MM-dd-yyyy hh:mm" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" writable="false" required="true"></activiti:formProperty>
@@ -78,7 +78,7 @@
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="STARTED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -101,14 +101,14 @@
     <callActivity id="notifyGroups" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
         <activiti:in sourceExpression="scheduleChange" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
       </extensionElements>
     </callActivity>
     <endEvent id="endevent1" name="Fin">
       <documentation>Fin del proceso</documentation>
     </endEvent>
-    <userTask id="validateRequest" name="Validar Solicitud" activiti:candidateGroups="Application/BackOffice">
-      <documentation>{"translationPrefix":"requestValidation","fields":{"actualDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"program":{"renderAs":"dropdown","customFieldType":"studentProgram","writable":false},"schedule":{"renderAs":"enum","customFieldType":"studentProgramTurns","key":"id","display":"name","writable":false},"newSchedule": {"renderAs": "studentProgramTurns","customFieldType": "studentProgramTurnsWithOutValue","key": "id","display": "name","parentField": "schedule","disableSelectedValue": true},"studentComments":{"renderAs":"textArea"},"comments":{"renderAs":"textArea"},"requestApproved":{"groupAs":"yesNoJustificationWithOptions","groupType":"options","renderAs":"boolean"},"rejectionCause":{"groupAs":"yesNoJustificationWithOptions","groupType":"cause","parentField":"requestApproved","renderAs":"enum"}}}</documentation>
+    <userTask id="validateRequest" name="Validar Solicitud" activiti:candidateGroups="APPLICATION/BackOffice">
+      <documentation>{ "translationPrefix": "requestValidation", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox", "writable": false }, "student": { "renderAs": "textBox", "writable": false }, "studentEmail": { "renderAs": "textBox", "writable": false }, "program": { "renderAs": "dropdown", "writable": false }, "schedule": { "renderAs": "enum", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "studentComments": { "renderAs": "textArea" }, "comments": { "renderAs": "textArea" }, "requestApproved": { "groupAs": "yesNoJustificationWithOptions", "groupType": "options", "renderAs": "boolean" }, "rejectionCause": { "groupAs": "yesNoJustificationWithOptions", "groupType": "cause", "parentField": "requestApproved", "renderAs": "enum" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="requestApproved" name="Aprobación de Solicitud" type="boolean" variable="requestApproved" required="true"></activiti:formProperty>
         <activiti:formProperty id="rejectionCause" name="Causa de Rechazo" type="enum" variable="rejectionCause">
@@ -119,7 +119,7 @@
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateRequest"></activiti:formProperty>
         <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
           <activiti:field name="percentage">
-            <activiti:string><![CDATA[50]]></activiti:string>
+            <activiti:string><![CDATA[0]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
         <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
@@ -182,8 +182,8 @@
     <scriptTask id="scripttask2" name="Preparar actualización caso x cambio Jornada" scriptFormat="javascript" activiti:autoStoreVariables="false">
       <script>java.lang.System.out.println("HELLO");</script>
     </scriptTask>
-    <userTask id="validateDocumentation" name="Validar Documentación" activiti:candidateGroups="Application/BackOffice">
-      <documentation>{"translationPrefix":"validateDocumentation","fields":{"actualDate":{"renderAs":"date","customFieldType":"dateField"},"studentId":{"renderAs":"textBox","customFieldType":"studentId","writable":false},"student":{"renderAs":"textBox","customFieldType":"studentName","writable":false},"studentEmail":{"renderAs":"textBox","customFieldType":"studentEmail","writable":false},"program":{"renderAs":"dropdown","customFieldType":"studentProgram","writable":false},"schedule":{"renderAs":"enum","customFieldType":"studentProgramTurns","key":"id","display":"name","writable":false},"newSchedule": {"renderAs": "studentProgramTurns","customFieldType": "studentProgramTurnsWithOutValue","key": "id","display": "name","parentField": "schedule","disableSelectedValue": true},"comments":{"renderAs":"textArea"},"documentationApproved":{"groupAs":"yesNoJustificationWithOptions","groupType":"options","renderAs":"boolean"}}}</documentation>
+    <userTask id="validateDocumentation" name="Validar Documentación" activiti:candidateGroups="APPLICATION/BackOffice">
+      <documentation>{ "translationPrefix": "validateDocumentation", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox", "writable": false }, "student": { "renderAs": "textBox", "writable": false }, "studentEmail": { "renderAs": "textBox", "writable": false }, "program": { "renderAs": "dropdown", "writable": false }, "schedule": { "renderAs": "enum", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "comments": { "renderAs": "textArea" }, "documentationApproved": { "groupAs": "yesNoJustificationWithOptions", "groupType": "options", "renderAs": "boolean" } } }</documentation>
       <extensionElements>
         <activiti:formProperty id="documentationApproved" name="Aprobación de Solicitud" type="boolean" variable="documentationApproved" required="true"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateDoc"></activiti:formProperty>
@@ -201,7 +201,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="validateDocumentation" targetRef="sid-C7C255BD-6C76-47D2-B9CA-E0278D2A016C"></sequenceFlow>
-    <userTask id="attachDocumentation" name="Adjuntar Documentación" activiti:candidateGroups="Application/Student">
+    <userTask id="attachDocumentation" name="Adjuntar Documentación" activiti:candidateGroups="APPLICATION/Student">
       <documentation>{"translationPrefix":"attachDocumentation","fields":{"documentationApproved":{"groupAs":"yesNoJustificationWithOptions","groupType":"options","renderAs":"boolean"},"commentsValidateDoc":{"renderAs":"textArea"},"supportDocuments":{"renderAs":"fileAttachment"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></activiti:formProperty>
@@ -253,7 +253,7 @@ execution.setVariable('commentsValidateRequest', '');
     <callActivity id="endingNotification2" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
@@ -263,7 +263,7 @@ execution.setVariable('commentsValidateRequest', '');
     <callActivity id="endingNotification1" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
         <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="Application/BackOffice" target="notificationRecipientsGroup"></activiti:in>
+        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
         <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
         <activiti:in source="processId" target="processId"></activiti:in>
         <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
