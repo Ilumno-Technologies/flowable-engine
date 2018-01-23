@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             xmlns:activiti="http://activiti.org/bpmn"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
-             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             typeLanguage="http://www.w3.org/2001/XMLSchema"
-             expressionLanguage="http://www.w3.org/1999/XPath"
-             targetNamespace="http://www.activiti.org/careers">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/careers">
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="scheduleChangeProcess"></participant>
   </collaboration>
   <process id="scheduleChangeProcess" name="Cambio de Jornada (Manual)" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "scheduleChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
-    <extensionElements>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
-        <activiti:field name="percentage">
-          <activiti:string><![CDATA[0]]></activiti:string>
-        </activiti:field>
-      </activiti:executionListener>
-    </extensionElements>
     <laneSet id="laneSet_scheduleChangeProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
         <flowNodeRef>startForm</flowNodeRef>
@@ -84,6 +66,13 @@
         <activiti:formProperty id="newSchedule" name="Nueva Jornada" type="enum" variable="newSchedule" required="true"></activiti:formProperty>
         <activiti:formProperty id="studentComments" name="Observaciones" type="string" variable="studentComments"></activiti:formProperty>
         <activiti:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></activiti:formProperty>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
       </extensionElements>
     </startEvent>
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
@@ -128,16 +117,16 @@
           <activiti:value id="C" name="C"></activiti:value>
         </activiti:formProperty>
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateRequest"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[0]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[0]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
         <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
@@ -198,17 +187,17 @@
       <extensionElements>
         <activiti:formProperty id="documentationApproved" name="Aprobación de Solicitud" type="boolean" variable="documentationApproved" required="true"></activiti:formProperty>
         <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateDoc"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[50]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>-->
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[50]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="validateDocumentation" targetRef="sid-C7C255BD-6C76-47D2-B9CA-E0278D2A016C"></sequenceFlow>
@@ -216,17 +205,17 @@
       <documentation>{"translationPrefix":"attachDocumentation","fields":{"documentationApproved":{"groupAs":"yesNoJustificationWithOptions","groupType":"options","renderAs":"boolean"},"commentsValidateDoc":{"renderAs":"textArea"},"supportDocuments":{"renderAs":"fileAttachment"}}}</documentation>
       <extensionElements>
         <activiti:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[75]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>-->
+        <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[75]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <activiti:field name="percentage">
+            <activiti:string><![CDATA[100]]></activiti:string>
+          </activiti:field>
+        </activiti:executionListener>
+        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-22940B77-EFA8-48D0-95BD-522F679D426F" sourceRef="attachDocumentation" targetRef="scripttask3"></sequenceFlow>
