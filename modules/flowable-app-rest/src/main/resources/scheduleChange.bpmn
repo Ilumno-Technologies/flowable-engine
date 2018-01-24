@@ -2,7 +2,7 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:flowable="http://activiti.org/bpmn"
              xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
              xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
@@ -12,16 +12,16 @@
   <collaboration id="Collaboration">
     <participant id="sid-DF77EB5C-7308-429E-8401-838B15EC5344" processRef="scheduleChangeProcess"></participant>
   </collaboration>
-  <process id="scheduleChangeProcess" name="Cambio de Jornada (Manual)" isExecutable="true" activiti:candidateStarterGroups="APPLICATION/Student">
+  <process id="scheduleChangeProcess" name="Cambio de Jornada (Manual)" flowable:candidateStarterGroups="APPLICATION/Student">
     <documentation>{"translationPrefix": "scheduleChangeProcess", "estimatedDuration": 5, "sideComponents":[{"name":"comments"},{"name":"attachments"},{"name":"timeline"}]}</documentation>
     <extensionElements>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></activiti:executionListener>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></activiti:executionListener>
-      <activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
-        <activiti:field name="percentage">
-          <activiti:string><![CDATA[0]]></activiti:string>
-        </activiti:field>
-      </activiti:executionListener>
+      <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.TimestampSetupListener"></flowable:executionListener>
+      <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.ProcessKeyListener"></flowable:executionListener>
+      <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+        <flowable:field name="percentage">
+          <flowable:string><![CDATA[0]]></flowable:string>
+        </flowable:field>
+      </flowable:executionListener>
     </extensionElements>
     <laneSet id="laneSet_scheduleChangeProcess">
       <lane id="sid-0AD809AE-4631-459E-97F9-A73F84FD514E">
@@ -72,95 +72,95 @@
         <flowNodeRef>endingNotification2</flowNodeRef>
       </lane>
     </laneSet>
-    <startEvent id="startForm" name="Inicio" activiti:formKey="formularioInicio">
+    <startEvent id="startForm" name="Inicio" flowable:formKey="formularioInicio">
       <documentation>{ "translationPrefix": "initialForm", "fields": { "actualDate": { "renderAs": "date", "customFieldType": "dateField" }, "studentId": { "renderAs": "textBox", "customFieldType": "studentId", "writable": false }, "student": { "renderAs": "textBox", "customFieldType": "studentName", "writable": false }, "studentEmail": { "renderAs": "textBox", "customFieldType": "studentEmail", "writable": false }, "program": { "renderAs": "dropdown", "customFieldType": "studentProgram", "writable": false }, "schedule": { "renderAs": "enum", "customFieldType": "studentProgramTurns", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "customFieldType": "universitySchedules", "customFieldTypeParamsOverride": { "levelId": { "type": "queryString", "from": "userContextInfo", "path": "program.levelId" }, "siteId": { "type": "queryString", "from": "userContextInfo", "path": "program.siteId" } }, "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "studentComments": { "renderAs": "textArea" }, "supportDocuments": { "renderAs": "fileAttachment" } } }</documentation>
       <extensionElements>
-        <activiti:formProperty id="actualDate" name="Fecha Actual" type="date" variable="currentDate" datePattern="MM-dd-yyyy hh:mm" writable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" writable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="student" name="Alumno" type="string" variable="student" writable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="studentEmail" name="Email del Estudiante" type="string" variable="studentEmail"></activiti:formProperty>
-        <activiti:formProperty id="program" name="Programa" type="string" variable="program" writable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="schedule" name="Jornada Actual" type="enum" variable="schedule" required="true"></activiti:formProperty>
-        <activiti:formProperty id="newSchedule" name="Nueva Jornada" type="enum" variable="newSchedule" required="true"></activiti:formProperty>
-        <activiti:formProperty id="studentComments" name="Observaciones" type="string" variable="studentComments"></activiti:formProperty>
-        <activiti:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></activiti:formProperty>
+        <flowable:formProperty id="actualDate" name="Fecha Actual" type="date" variable="currentDate" datePattern="MM-dd-yyyy hh:mm" writable="false" required="true"></flowable:formProperty>
+        <flowable:formProperty id="studentId" name="Identificador Alumno" type="string" variable="studentId" writable="false" required="true"></flowable:formProperty>
+        <flowable:formProperty id="student" name="Alumno" type="string" variable="student" writable="false" required="true"></flowable:formProperty>
+        <flowable:formProperty id="studentEmail" name="Email del Estudiante" type="string" variable="studentEmail"></flowable:formProperty>
+        <flowable:formProperty id="program" name="Programa" type="string" variable="program" writable="false" required="true"></flowable:formProperty>
+        <flowable:formProperty id="schedule" name="Jornada Actual" type="enum" variable="schedule" required="true"></flowable:formProperty>
+        <flowable:formProperty id="newSchedule" name="Nueva Jornada" type="enum" variable="newSchedule" required="true"></flowable:formProperty>
+        <flowable:formProperty id="studentComments" name="Observaciones" type="string" variable="studentComments"></flowable:formProperty>
+        <flowable:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></flowable:formProperty>
       </extensionElements>
     </startEvent>
     <callActivity id="Notificacion" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
-        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
-        <activiti:in sourceExpression="STARTED_PROCESS" target="notificationType"></activiti:in>
-        <activiti:in source="processId" target="processId"></activiti:in>
-        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+        <flowable:in source="studentEmail" target="notificationRecipients"></flowable:in>
+        <flowable:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></flowable:in>
+        <flowable:in sourceExpression="STARTED_PROCESS" target="notificationType"></flowable:in>
+        <flowable:in source="processId" target="processId"></flowable:in>
+        <flowable:in source="processDefinitionKey" target="processDefinitionKey"></flowable:in>
       </extensionElements>
     </callActivity>
     <callActivity id="createCrmCase" name="Crear Caso CRM" calledElement="crmCreationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="scheduleChange" target="caseType"></activiti:in>
-        <activiti:in source="studentIdType" target="studentIdType"></activiti:in>
-        <activiti:in source="studentId" target="studentId"></activiti:in>
-        <activiti:out source="caseId" target="crmCaseId"></activiti:out>
+        <flowable:in sourceExpression="scheduleChange" target="caseType"></flowable:in>
+        <flowable:in source="studentIdType" target="studentIdType"></flowable:in>
+        <flowable:in source="studentId" target="studentId"></flowable:in>
+        <flowable:out source="caseId" target="crmCaseId"></flowable:out>
       </extensionElements>
     </callActivity>
     <callActivity id="notifyUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="scheduleChange" target="notificationType"></activiti:in>
-        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+        <flowable:in sourceExpression="scheduleChangeInitStudent" target="notificationType"></flowable:in>
+        <flowable:in source="studentEmail" target="mailRecipient"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
     <callActivity id="notifyGroups" name="Enviar Notificación Grupo Responsable" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="scheduleChange" target="notificationType"></activiti:in>
-        <activiti:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></activiti:in>
+        <flowable:in sourceExpression="scheduleChange" target="notificationType"></flowable:in>
+        <flowable:in sourceExpression="APPLICATION/BackOffice" target="mailRecipientGroup"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
     <endEvent id="endevent1" name="Fin">
       <documentation>Fin del proceso</documentation>
     </endEvent>
-    <userTask id="validateRequest" name="Validar Solicitud" activiti:candidateGroups="APPLICATION/BackOffice">
+    <userTask id="validateRequest" name="Validar Solicitud" flowable:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "requestValidation", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox", "writable": false }, "student": { "renderAs": "textBox", "writable": false }, "studentEmail": { "renderAs": "textBox", "writable": false }, "program": { "renderAs": "dropdown", "writable": false }, "schedule": { "renderAs": "enum", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "studentComments": { "renderAs": "textArea" }, "comments": { "renderAs": "textArea" }, "requestApproved": { "groupAs": "yesNoJustificationWithOptions", "groupType": "options", "renderAs": "boolean" }, "rejectionCause": { "groupAs": "yesNoJustificationWithOptions", "groupType": "cause", "parentField": "requestApproved", "renderAs": "enum" } } }</documentation>
       <extensionElements>
-        <activiti:formProperty id="requestApproved" name="Aprobación de Solicitud" type="boolean" variable="requestApproved" required="true"></activiti:formProperty>
-        <activiti:formProperty id="rejectionCause" name="Causa de Rechazo" type="enum" variable="rejectionCause">
-          <activiti:value id="A" name="A"></activiti:value>
-          <activiti:value id="B" name="B"></activiti:value>
-          <activiti:value id="C" name="C"></activiti:value>
-        </activiti:formProperty>
-        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateRequest"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[0]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>
+        <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage" stringValue="0"/>
+        </flowable:executionListener>
+        <flowable:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></flowable:taskListener>
+        <flowable:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage" stringValue="100" />
+        </flowable:executionListener>
+        <flowable:formProperty id="requestApproved" name="Aprobación de Solicitud" type="boolean" variable="requestApproved" required="true"></flowable:formProperty>
+        <flowable:formProperty id="rejectionCause" name="Causa de Rechazo" type="enum" variable="rejectionCause">
+          <flowable:value id="A" name="A"></flowable:value>
+          <flowable:value id="B" name="B"></flowable:value>
+          <flowable:value id="C" name="C"></flowable:value>
+        </flowable:formProperty>
+        <flowable:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateRequest"></flowable:formProperty>
       </extensionElements>
     </userTask>
-    <serviceTask id="fetchValidationValues" name="Obtener valores para Validación" activiti:class="com.ilumno.bps.pdp.task.BannerFetchScheduleData"></serviceTask>
+    <serviceTask id="fetchValidationValues" name="Obtener valores para Validación" flowable:class="com.ilumno.bps.pdp.task.BannerFetchScheduleData"></serviceTask>
     <callActivity id="updateCrmCase" name="Actualizar Caso CRM" calledElement="crmUpdateProcess">
       <extensionElements>
-        <activiti:in sourceExpression="close" target="status"></activiti:in>
-        <activiti:in source="crmCaseId" target="caseId"></activiti:in>
+        <flowable:in sourceExpression="close" target="status"></flowable:in>
+        <flowable:in source="crmCaseId" target="caseId"></flowable:in>
       </extensionElements>
     </callActivity>
     <callActivity id="notifyClosureToUser" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="scheduleChangeClosure" target="notificationType"></activiti:in>
-        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+        <flowable:in sourceExpression="scheduleChangeClosure" target="notificationType"></flowable:in>
+        <flowable:in source="studentEmail" target="mailRecipient"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
-    <serviceTask id="updateScheduleInBanner" name="Actualizar Jornada en Banner" activiti:class="com.ilumno.bps.pdp.task.BannerUpdateCaseTask"></serviceTask>
+    <serviceTask id="updateScheduleInBanner" name="Actualizar Jornada en Banner" flowable:class="com.ilumno.bps.pdp.task.BannerUpdateCaseTask"></serviceTask>
     <exclusiveGateway id="exclusivegateway1" name="Validación Correcta?"></exclusiveGateway>
     <exclusiveGateway id="sid-C7C255BD-6C76-47D2-B9CA-E0278D2A016C" name="Documentación Correcta?"></exclusiveGateway>
     <callActivity id="notifyWrongDocToUser" name="Notificar Usuario Adjuntar Documentación" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="newDocumentationRequired" target="notificationType"></activiti:in>
-        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+        <flowable:in sourceExpression="newDocumentationRequired" target="notificationType"></flowable:in>
+        <flowable:in source="studentEmail" target="mailRecipient"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="sid-36ABACF3-4D82-4757-B3C2-ED28832361D5" sourceRef="startForm" targetRef="parallelgateway1"></sequenceFlow>
@@ -187,57 +187,58 @@
     <sequenceFlow id="sid-4B89FA7C-E824-4EE8-84E8-D992437FF91A" sourceRef="scripttask1" targetRef="updateCrmCase"></sequenceFlow>
     <sequenceFlow id="sid-B8AB1BD2-30CF-4CB0-8C80-1686B52AFADB" sourceRef="updateScheduleInBanner" targetRef="scripttask2"></sequenceFlow>
     <sequenceFlow id="sid-4195AD74-CBCA-4611-A6AF-70846CEFBD8E" sourceRef="scripttask2" targetRef="updateCrmCase"></sequenceFlow>
-    <scriptTask id="scripttask1" name="Preparar actualización caso x validación incorrecta" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask1" name="Preparar actualización caso x validación incorrecta" scriptFormat="javascript" flowable:autoStoreVariables="false">
       <script>java.lang.System.out.println("HELLO");</script>
     </scriptTask>
-    <scriptTask id="scripttask2" name="Preparar actualización caso x cambio Jornada" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask2" name="Preparar actualización caso x cambio Jornada" scriptFormat="javascript" flowable:autoStoreVariables="false">
       <script>java.lang.System.out.println("HELLO");</script>
     </scriptTask>
-    <userTask id="validateDocumentation" name="Validar Documentación" activiti:candidateGroups="APPLICATION/BackOffice">
+    <userTask id="validateDocumentation" name="Validar Documentación" flowable:candidateGroups="APPLICATION/BackOffice">
       <documentation>{ "translationPrefix": "validateDocumentation", "fields": { "actualDate": { "renderAs": "date" }, "studentId": { "renderAs": "textBox", "writable": false }, "student": { "renderAs": "textBox", "writable": false }, "studentEmail": { "renderAs": "textBox", "writable": false }, "program": { "renderAs": "dropdown", "writable": false }, "schedule": { "renderAs": "enum", "key": "id", "display": "name", "writable": false }, "newSchedule": { "renderAs": "studentProgramTurns", "key": "id", "display": "name", "parentField": "schedule", "disableSelectedValue": true }, "comments": { "renderAs": "textArea" }, "documentationApproved": { "groupAs": "yesNoJustificationWithOptions", "groupType": "options", "renderAs": "boolean" } } }</documentation>
       <extensionElements>
-        <activiti:formProperty id="documentationApproved" name="Aprobación de Solicitud" type="boolean" variable="documentationApproved" required="true"></activiti:formProperty>
-        <activiti:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateDoc"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[50]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>-->
+        <flowable:formProperty id="documentationApproved" name="Aprobación de Solicitud" type="boolean" variable="documentationApproved" required="true"></flowable:formProperty>
+        <flowable:formProperty id="comments" name="Observaciones" type="string" variable="commentsValidateDoc"></flowable:formProperty>
+        <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage">
+            <flowable:string><![CDATA[50]]></flowable:string>
+          </flowable:field>
+        </flowable:executionListener>
+        <flowable:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage">
+            <flowable:string><![CDATA[100]]></flowable:string>
+          </flowable:field>
+        </flowable:executionListener>
+        <flowable:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></flowable:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="validateDocumentation" targetRef="sid-C7C255BD-6C76-47D2-B9CA-E0278D2A016C"></sequenceFlow>
-    <userTask id="attachDocumentation" name="Adjuntar Documentación" activiti:candidateGroups="APPLICATION/Student">
+    <userTask id="attachDocumentation" name="Adjuntar Documentación" flowable:candidateGroups="APPLICATION/Student">
       <documentation>{"translationPrefix":"attachDocumentation","fields":{"documentationApproved":{"groupAs":"yesNoJustificationWithOptions","groupType":"options","renderAs":"boolean"},"commentsValidateDoc":{"renderAs":"textArea"},"supportDocuments":{"renderAs":"fileAttachment"}}}</documentation>
       <extensionElements>
-        <activiti:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></activiti:formProperty>
-        <!--<activiti:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[75]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">-->
-          <!--<activiti:field name="percentage">-->
-            <!--<activiti:string><![CDATA[100]]></activiti:string>-->
-          <!--</activiti:field>-->
-        <!--</activiti:executionListener>-->
-        <!--<activiti:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></activiti:taskListener>-->
+        <flowable:formProperty id="supportDocuments" name="Documentos de Soporte" type="string" variable="supportDocuments" required="true"></flowable:formProperty>
+        <flowable:executionListener event="start" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage">
+            <flowable:string><![CDATA[75]]></flowable:string>
+          </flowable:field>
+        </flowable:executionListener>
+        <flowable:executionListener event="end" class="com.ilumno.bps.pdp.listener.UserTaskProgressionListener">
+          <flowable:field name="percentage">
+            <flowable:string><![CDATA[100]]></flowable:string>
+          </flowable:field>
+        </flowable:executionListener>
+        <flowable:taskListener event="create" class="com.ilumno.bps.pdp.listener.task.CurrentTaskListener"></flowable:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-22940B77-EFA8-48D0-95BD-522F679D426F" sourceRef="attachDocumentation" targetRef="scripttask3"></sequenceFlow>
     <callActivity id="callactivity1" name="Notificar Usuario Correcta Documentación" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="correctDocumentationButInvalidRequest" target="notificationType"></activiti:in>
-        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+        <flowable:in sourceExpression="correctDocumentationButInvalidRequest" target="notificationType"></flowable:in>
+        <flowable:in source="studentEmail" target="mailRecipient"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow3" sourceRef="callactivity1" targetRef="scripttask1"></sequenceFlow>
-    <scriptTask id="scripttask3" name="Reset de valores" scriptFormat="javascript" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttask3" name="Reset de valores" scriptFormat="javascript" flowable:autoStoreVariables="false">
       <script>execution.setVariable('requestApproved', '');
 execution.setVariable('rejectionCause', '');
 execution.setVariable('commentsValidateRequest', '');
@@ -256,28 +257,29 @@ execution.setVariable('commentsValidateRequest', '');
     <sequenceFlow id="flow6" sourceRef="timerintermediatecatchevent1" targetRef="callactivity2"></sequenceFlow>
     <callActivity id="callactivity2" name="Enviar Notificación Usuario" calledElement="userNotificationProcess">
       <extensionElements>
-        <activiti:in sourceExpression="timeout" target="notificationType"></activiti:in>
-        <activiti:in source="studentEmail" target="mailRecipient"></activiti:in>
+        <flowable:in sourceExpression="timeout" target="notificationType"></flowable:in>
+        <flowable:in source="studentEmail" target="mailRecipient"></flowable:in>
+        <flowable:in source="student" target="student"></flowable:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow7" sourceRef="callactivity2" targetRef="endingNotification1"></sequenceFlow>
     <callActivity id="endingNotification2" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
-        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
-        <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
-        <activiti:in source="processId" target="processId"></activiti:in>
-        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+        <flowable:in source="studentEmail" target="notificationRecipients"></flowable:in>
+        <flowable:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></flowable:in>
+        <flowable:in sourceExpression="ENDED_PROCESS" target="notificationType"></flowable:in>
+        <flowable:in source="processId" target="processId"></flowable:in>
+        <flowable:in source="processDefinitionKey" target="processDefinitionKey"></flowable:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow8" sourceRef="endingNotification2" targetRef="endevent1"></sequenceFlow>
     <callActivity id="endingNotification1" name="Notificacion" calledElement="notificationProcess">
       <extensionElements>
-        <activiti:in source="studentEmail" target="notificationRecipients"></activiti:in>
-        <activiti:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></activiti:in>
-        <activiti:in sourceExpression="ENDED_PROCESS" target="notificationType"></activiti:in>
-        <activiti:in source="processId" target="processId"></activiti:in>
-        <activiti:in source="processDefinitionKey" target="processDefinitionKey"></activiti:in>
+        <flowable:in source="studentEmail" target="notificationRecipients"></flowable:in>
+        <flowable:in sourceExpression="APPLICATION/BackOffice" target="notificationRecipientsGroup"></flowable:in>
+        <flowable:in sourceExpression="ENDED_PROCESS" target="notificationType"></flowable:in>
+        <flowable:in source="processId" target="processId"></flowable:in>
+        <flowable:in source="processDefinitionKey" target="processDefinitionKey"></flowable:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow9" sourceRef="endingNotification1" targetRef="endevent2"></sequenceFlow>
