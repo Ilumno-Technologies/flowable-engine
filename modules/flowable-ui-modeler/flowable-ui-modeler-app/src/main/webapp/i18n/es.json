@@ -5,7 +5,8 @@
             "PROCESSES": "Procesos",
             "FORMS": "Formularios",
             "DECISION-TABLES": "Tablas de decisión",
-            "APPS": "Aplicaciones"
+            "APPS": "Aplicaciones",
+            "CASEMODELS": "Modelos"
         },
         "TITLE": {
             "SELECT-GROUP" :"Selecciona el grupo",
@@ -34,7 +35,7 @@
           "PEOPLE-NO-MATCHING-RESULTS": "No se encontraron usuarios similares",
           "GROUP-NO-MATCHING-RESULTS": "No se encontraron grupos similares",
           "GROUP-SOURCE-TYPE": "Group source",
-          "GROUP-SOURCE-SEARCH-OPTION": "Busqueda de grupo",
+          "GROUP-SOURCE-SEARCH-OPTION": "Búsqueda de grupo",
           "GROUP-SOURCE-FIELD-OPTION": "Campo de formulario"
         }
     },
@@ -86,7 +87,7 @@
 
     "FORMS-LIST" : {
         "TITLE" : "Formularios",
-        "SEARCH-PLACEHOLDER": "Busqueda",
+        "SEARCH-PLACEHOLDER": "Búsqueda",
         "ACTION" : {
             "CREATE": "Crear formulario",
             "CREATE-INLINE": "Crear un nuevo formulario ahora!",
@@ -111,22 +112,22 @@
     },
 
     "DECISION-TABLES-LIST": {
-        "TITLE": "Tablas de decision",
-        "SEARCH-PLACEHOLDER": "Busqueda",
+        "TITLE": "Tablas de decisión",
+        "SEARCH-PLACEHOLDER": "Búsqueda",
         "ACTION": {
-            "CREATE": "Crear tabla de decision",
-            "IMPORT": "Importar tabla de decision",
-            "CREATE-INLINE": "Crear una tabla de decision ahora!",
+            "CREATE": "Crear tabla de decisión",
+            "IMPORT": "Importar tabla de decisión",
+            "CREATE-INLINE": "Crear una tabla de decisión ahora!",
             "SHOW-MORE": "Mostrar más..."
         },
 
         "FILTER": {
-            "DECISION-TABLES": "Tablas de decision",
-            "DECISION-TABLES-COUNT": "Existen {{total}} tablas de decision",
-            "DECISION-TABLES-ONE": "Existe una tabla de decision",
-            "DECISION-TABLES-EMPTY": "No existen tablas de decision. Para agregar una da click en Crear tabla de decision.",
+            "DECISION-TABLES": "Tablas de decisión",
+            "DECISION-TABLES-COUNT": "Existen {{total}} tablas de decisión",
+            "DECISION-TABLES-ONE": "Existe una tabla de decisión",
+            "DECISION-TABLES-EMPTY": "No existen tablas de decisión. Para agregar una da click en Crear tabla de decisión.",
             "FILTER-TEXT": ", parecido a \"{{filterText}}\"",
-            "FILTER-TEXT-EMPTY": "no existen tablas de decision parecidas a \"{{filterText}}\""
+            "FILTER-TEXT-EMPTY": "no existen tablas de decisión parecidas a \"{{filterText}}\""
         },
 
         "SORT": {
@@ -139,7 +140,7 @@
 
     "APPS-LIST" : {
         "TITLE" : "Aplicaciones",
-        "SEARCH-PLACEHOLDER": "Busqueda",
+        "SEARCH-PLACEHOLDER": "Búsqueda",
         "ACTION" : {
             "CREATE": "Crear App",
             "IMPORT": "Importar App",
@@ -285,24 +286,24 @@
     },
 
     "DECISION-TABLE": {
-        "NAME": "Nombre de la Tabla de decision",
-        "KEY": "Identificador de la Tabla de decision",
+        "NAME": "Nombre de la Tabla de decisión",
+        "KEY": "Identificador de la Tabla de decisión",
         "DESCRIPTION": "Descripcion",
         "VERSION-COMMENT": "Comentario de version",
         "HIT-POLICY": "Reglas de aciertos:",
         "ACTION": {
             "DETAILS": "Mostrar detalles",
             "EDIT": "Modificar propiedades del modelo",
-            "SHARE": "Compartir esta tabla de decision",
-            "DELETE": "Borrar esta tabla de decision",
+            "SHARE": "Compartir esta tabla de decisión",
+            "DELETE": "Borrar esta tabla de decisión",
             "ADD-COMMENT": "+ Agregar comentario",
-            "CREATE-CONFIRM": "Crear nueva tabla de decision",
-            "OPEN-IN-EDITOR": "Editor de tabla de decision",
-            "EXPORT": "Exportar tabla de decision",
-            "DELETE-CONFIRM": "Borrar tabla de decision",
+            "CREATE-CONFIRM": "Crear nueva tabla de decisión",
+            "OPEN-IN-EDITOR": "Editor de tabla de decisión",
+            "EXPORT": "Exportar tabla de decisión",
+            "DELETE-CONFIRM": "Borrar tabla de decisión",
             "USE-AS-NEW-VERSION": "Usar como nueva version",
-            "FAVORITE": "Maracar como favorita esta tabla de decision",
-            "DUPLICATE": "Duplicar esta tabla de decision"
+            "FAVORITE": "Maracar como favorita esta tabla de decisión",
+            "DUPLICATE": "Duplicar esta tabla de decisión"
         },
         "DETAILS": {
             "HISTORY-TITLE": "Historial",
@@ -315,14 +316,14 @@
             "ANY": "Cualquiera (Single pass)"
         },
         "POPUP": {
-            "CREATE-TITLE": "Crear nueva tabla de decision",
-            "CREATE-DESCRIPTION": "Es necesario dar un nombre par a la tabla de decision, es recomendable proporcionar una descripcion al mismo tiempo.",
-            "DUPLICATE-TITLE": "Duplicar tabla de decision",
-            "DUPLICATE-DESCRIPTION": "Puedes dar un nombre para la nueba tabla de decision es recomendable proporcionar una descripcion al mismo tiempo.",
-            "SAVE-DESCRIPTION": "Es necesario proporcionar un nombre y un identificador unico para la tabla de decision, es recomendable proporcionar una descripcion al mismo tiempo",
-            "DELETE-TITLE": "Borrar tabla de decision",
-            "DELETE-DESCRIPTION": "Estas Seguro que deseas borrar esta tabla de decision \"{{name}}\"?",
-            "SAVE-DECISION-TABLE-TITLE": "Guardar tabla de decision",
+            "CREATE-TITLE": "Crear nueva tabla de decisión",
+            "CREATE-DESCRIPTION": "Es necesario dar un nombre par a la tabla de decisión, es recomendable proporcionar una descripcion al mismo tiempo.",
+            "DUPLICATE-TITLE": "Duplicar tabla de decisión",
+            "DUPLICATE-DESCRIPTION": "Puedes dar un nombre para la nueba tabla de decisión es recomendable proporcionar una descripcion al mismo tiempo.",
+            "SAVE-DESCRIPTION": "Es necesario proporcionar un nombre y un identificador unico para la tabla de decisión, es recomendable proporcionar una descripcion al mismo tiempo",
+            "DELETE-TITLE": "Borrar tabla de decisión",
+            "DELETE-DESCRIPTION": "Estas Seguro que deseas borrar esta tabla de decisión \"{{name}}\"?",
+            "SAVE-DECISION-TABLE-TITLE": "Guardar tabla de decisión",
             "IMPORT-DESCRIPTION": "Busca o arrastra una definicion DMN XML con una extension .dmn o .dmn.xml",
           	"IMPORT-TITLE": "Importar un modelo DMN",
 	        "IMPORT": {
@@ -338,8 +339,8 @@
             "USE-AS-NEW-UNRESOLVED-MODEL": "Modelo '{{name}}' con identificador {{id}}, creado por {{createdBy}}"
         },
         "ALERT": {
-            "FAVORITE-CONFIRM": "Esta tabla de decision es ahora favorita",
-            "UN-FAVORITE-CONFIRM": "Esta tabla de decision ya no es favorita"
+            "FAVORITE-CONFIRM": "Esta tabla de decisión es ahora favorita",
+            "UN-FAVORITE-CONFIRM": "Esta tabla de decisión ya no es favorita"
         }
     },
 
@@ -528,6 +529,7 @@
                 "OUTPUT-NEW-VARIABLE-TYPE": "Tipo de variable:"
             }
         },
+        "BUTTON-ACTIONS-LABEL": "Acciones",
         "BUTTON-ADD-INPUT-LABEL": "Agregar entrada",
         "BUTTON-ADD-OUTPUT-LABEL": "Agregar salida",
         "BUTTON-ADD-RULE-LABEL": "Agregar regla",
@@ -536,7 +538,7 @@
         "BUTTON-REMOVE-RULE-LABEL": "Eliminar regla",
         "ALERT": {
             "EXPRESSION-VARIABLE-REQUIRED-ERROR": "Todas las expresiones de entrada y salida deben referenciar un campo del formulario o una variable.",
-            "SAVE-CONFIRM": "Guardar tabla de decision '{{name}}'"
+            "SAVE-CONFIRM": "Guardar tabla de decisión '{{name}}'"
         }
     },
 
@@ -829,7 +831,7 @@
     "EVENT_TYPE.VARIABLE.UPDATED.TOOLTIP": "Una variable existente fue actualizada",
 
     "PROPERTY.DECISIONTABLEREFERENCE.EMPTY" : "No hay referencia selecionada",
-    "PROPERTY.DECISIONTABLEREFERENCE.TITLE" : "Tabla de decision referenciada",
+    "PROPERTY.DECISIONTABLEREFERENCE.TITLE" : "Tabla de decisión referenciada",
     "PROPERTY.DECISIONTABLEREFERENCE.ERROR.FORM" : "Ocurrio un error cargando la tabla de decisiones. Intenta mas tarde",
     "PROPERTY.DECISIONTABLEREFERENCE.DECISIONTABLE.LOADING" : "Cargando tabla de decisiones...",
     "PROPERTY.DECISIONTABLEREFERENCE.DECISIONTABLE.EMPTY" : "Este folder no contiene tablas de decisiones"

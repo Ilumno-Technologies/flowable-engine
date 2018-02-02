@@ -844,6 +844,8 @@ hot-table .column-header.label {
 
 #decisionTableGrid th .input-header a, #decisionTableGrid th .output-header a {
     text-decoration: underline;
+    display: inline;
+    white-space: normal;
 }
 
 #decisionTableGrid th .input-header .header-variable, #decisionTableGrid th .output-header .header-variable {

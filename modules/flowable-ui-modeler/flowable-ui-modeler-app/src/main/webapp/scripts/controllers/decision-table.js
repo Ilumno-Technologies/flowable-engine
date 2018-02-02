@@ -496,7 +496,7 @@ angular.module('flowableModeler')
                     type: type,
                     title: '<div class="input-header">' +
                     '<a onclick="triggerExpressionEditor(\'input\',' + expressionPosition + ',false)"><span class="header-label">' + (inputExpression.label ? inputExpression.label : "New Input") + '</span></a>' +
-                    '<br><span class="header-variable">' + (inputExpression.variableId ? inputExpression.variableId : "none") + '</span>' +
+//                    '<br><span class="header-variable">' + (inputExpression.variableId ? inputExpression.variableId : "none") + '</span>' +
                     '<br/><span class="header-variable-type">' + (inputExpression.type ? inputExpression.type : "") + '</brspan>' +
                     '</div>',
                     expressionType: 'input-expression',
@@ -515,7 +515,7 @@ angular.module('flowableModeler')
 
                     columnDefinition.title = '<div class="input-header">' +
                         '<a onclick="triggerExpressionEditor(\'input\',' + expressionPosition + ',false)"><span class="header-label">' + (inputExpression.label ? inputExpression.label : "New Input") + '</span></a>' +
-                        '<br><span class="header-variable">' + (inputExpression.variableId ? inputExpression.variableId : "none") + '</span>' +
+//                        '<br><span class="header-variable">' + (inputExpression.variableId ? inputExpression.variableId : "none") + '</span>' +
                         '<br/><span class="header-variable-type">' + (inputExpression.type ? inputExpression.type : "") + '</span>' +
                         '<br><span class="header-entries">[' + inputExpression.entries.join() + ']</span>' +
                         '</div>';

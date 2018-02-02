@@ -2678,6 +2678,7 @@ h3+div > .dropzone {
     max-height: 35px;
     margin-top: -3px;
     margin-left: 10px;
+    max-width: 200px;
 }
 
 /** Password strength indicator */

@@ -136,7 +136,7 @@ flowableModeler
 
         } else {
             $routeProvider.when('/', {
-                redirectTo: '/processes'
+                redirectTo: '/decision-tables'
             })
         }
 
@@ -197,33 +197,42 @@ flowableModeler
             updateWindowSize();
 
             // Main navigation
+//            $rootScope.mainNavigation = [
+//                {
+//                    'id': 'processes',
+//                    'title': 'GENERAL.NAVIGATION.PROCESSES',
+//                    'path': '/processes'
+//                },
+//                {
+//                    'id': 'casemodels',
+//                    'title': 'GENERAL.NAVIGATION.CASEMODELS',
+//                    'path': '/casemodels'
+//                },
+//                {
+//                    'id': 'forms',
+//                    'title': 'GENERAL.NAVIGATION.FORMS',
+//                    'path': '/forms'
+//                },
+//                {
+//                    'id': 'decision-tables',
+//                    'title': 'GENERAL.NAVIGATION.DECISION-TABLES',
+//                    'path': '/decision-tables'
+//                },
+//                {
+//                    'id': 'apps',
+//                    'title': 'GENERAL.NAVIGATION.APPS',
+//                    'path': '/apps'
+//                }
+//            ];
+
             $rootScope.mainNavigation = [
-                {
-                    'id': 'processes',
-                    'title': 'GENERAL.NAVIGATION.PROCESSES',
-                    'path': '/processes'
-                },
-                {
-                    'id': 'casemodels',
-                    'title': 'GENERAL.NAVIGATION.CASEMODELS',
-                    'path': '/casemodels'
-                },
-                {
-                    'id': 'forms',
-                    'title': 'GENERAL.NAVIGATION.FORMS',
-                    'path': '/forms'
-                },
                 {
                     'id': 'decision-tables',
                     'title': 'GENERAL.NAVIGATION.DECISION-TABLES',
                     'path': '/decision-tables'
-                },
-                {
-                    'id': 'apps',
-                    'title': 'GENERAL.NAVIGATION.APPS',
-                    'path': '/apps'
                 }
             ];
+
 
             $rootScope.config = FLOWABLE.CONFIG;
 
